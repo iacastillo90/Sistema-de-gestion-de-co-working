@@ -1,14 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Nosotros | CoWork</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    
+  <!-- Contenido principal de la pagina -->
+  <main class="page-wrap">
+    <article aria-labelledby="about-title">
+      <!-- Hero: imagen principal + titulo superpuesto -->
+      <figure class="hero-media">
+        <img class="hero-image" src="./assets/img/1696536427-coworking-spaces-hybrid-world-1023-g1437209221.webp" alt="Espacio de cowork">
+        <figcaption class="hero-brand">Co-Work</figcaption>
+      </figure>
 
-    <script src="./assets/js/script.js"></script>
+      <!-- Contenido textual y bloques informativos -->
+      <section class="about-content" aria-label="Informacion sobre nosotros">
+        <!-- Primera fila: descripcion + tarjetas de contexto -->
+        <section class="top-row" aria-label="Introduccion y contexto">
+          <!-- Introduccion y mision -->
+          <section class="about-text" aria-labelledby="about-title">
+            <h1 id="about-title">Sobre Nosotros:</h1>
+            <section class="mision" aria-labelledby="mision-title">
+              <h2 id="mision-title" class="mision-titulo">Simplificar la gestion de espacios de trabajo compartido para emprendedores, equipos y freelancers.</h2>
+              <p class="mision-descripcion">Creamos experiencias claras, rapidas y enfocadas en resultados. Disenamos lugares y herramientas donde trabajar se siente simple: reservas sin friccion, comunidad activa y acompanamiento en cada etapa de crecimiento.</p>
+            </section>
+          </section>
+
+          <!-- Tarjetas de enfoque, publico y valores -->
+          <section class="info-grid" aria-label="Enfoque, publico y valores">
+            <article class="info-card">
+              <h2>Tecnologia que simplifica:</h2>
+              <p>Plataforma intuitiva, automatizacion de reservas y datos en tiempo real para decidir mejor.</p>
+            </article>
+            <article class="info-card">
+              <h2>A quien acompanamos:</h2>
+              <p>Freelancers, startups y equipos en crecimiento que buscan productividad y conexiones reales.</p>
+            </article>
+            <article class="info-card">
+              <h2>Lo que nos representa:</h2>
+              <p>Confianza, colaboracion, innovacion constante e impacto positivo en la comunidad tecnologica.</p>
+            </article>
+          </section>
+        </section>
+
+        <!-- Segunda fila: equipo + pilares -->
+        <section class="bottom-row" aria-label="Equipo y pilares">
+          <!-- Listado del equipo -->
+          <aside class="team-block" aria-labelledby="team-title">
+            <h3 id="team-title">Team</h3>
+            <section class="team-grid" aria-label="Integrantes del equipo">
+              <article class="team-member"><img src="./assets/img/ivan.jpg.jpeg" alt="Foto de Ivan"><div><p class="role">Product Owner</p><p class="name">Ivan</p></div></article>
+              <article class="team-member"><img src="./assets/img/Juan Pablo.jpeg" alt="Foto de Juan Pablo"><div><p class="role">Scrum Master</p><p class="name">Juan Pablo</p></div></article>
+              <article class="team-member"><img src="" alt="Foto de Alex"><div><p class="role">Developer</p><p class="name">Alex</p></div></article>
+              <article class="team-member"><img src="" alt="Foto de Maria"><div><p class="role">Developer</p><p class="name">Maria</p></div></article>
+              <article class="team-member"><img src="./assets/img/mifotooriginl.png" alt="Foto de Felipe Farias"><div><p class="role">Developer</p><p class="name">Felipe Farias</p></div></article>
+              <article class="team-member"><img src="" alt="Foto de Andrea"><div><p class="role">Developer</p><p class="name">Andrea</p></div></article>
+            </section>
+          </aside>
+
+          <!-- Pilares estrategicos del cowork -->
+          <section class="feature-block" aria-label="Pilares">
+            <article class="feature-item"><span class="icon-bubble" aria-hidden="true">&#128081;</span><h4>Lideres pioneros</h4><p>Guiamos proyectos con vision, experiencia y acompanamiento cercano para lograr resultados reales.</p></article>
+            <article class="feature-item"><span class="icon-bubble" aria-hidden="true">&#129513;</span><h4>Flexibilidad a tu medida</h4><p>Planes adaptables para tu ritmo de trabajo.</p></article>
+            <article class="feature-item"><span class="icon-bubble" aria-hidden="true">&#129309;</span><h4>Comunidad conectada</h4><p>Networking y colaboracion que generan valor.</p></article>
+            <article class="feature-item"><span class="icon-bubble" aria-hidden="true">&#128200;</span><h4>Tu crecimiento es prioridad</h4><p>Te acompanamos para escalar con foco, orden y objetivos claros.</p></article>
+          </section>
+        </section>
+
+        <!-- Seccion de conversion compacta -->
+        <section class="mini-cta" aria-labelledby="mini-cta-title">
+          <p class="mini-cta-kicker">No esperes mas para potenciar tu negocio</p>
+          <h2 id="mini-cta-title">Descubre como Co-Work transforma tu forma de trabajar.</h2>
+          <a class="mini-cta-btn" href="#" aria-label="Explorar espacios y servicios">Explora nuestros espacios y servicios</a>
+        </section>
+      </section>
+    </article>
+  </main>
+
+  <footer class="page-wrap" aria-label="Pie de pagina">
+    
+  </footer>
 </body>
 </html>
