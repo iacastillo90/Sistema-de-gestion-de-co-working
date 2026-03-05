@@ -1,21 +1,28 @@
+/**
+ * WorkHub - Gestión de Interfaz Profesional
+ */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.getElementById("mainNav");
 
-    const botonesHero = document.querySelectorAll(".btn-white");
-
-    botonesHero.forEach(function(boton) {
-        boton.addEventListener("click", function(e) {
-            e.preventDefault();
-
-            boton.classList.toggle("active");
-
-            const numero = "56912345678"; // 👈 CAMBIA POR TU NÚMERO REAL
-            const mensaje = "Hola, quiero agendar una visita a sus espacios de coworking.";
-
-            const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
-
-            window.open(url, "_blank");
-        });
+    // 1. Efecto Scroll en Navbar para cambio de estética
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
     });
 
+    // 2. Feedback de interacción en botones de acción
+    const actionButtons = document.querySelectorAll(".btn-white, .btn-outline-custom");
+
+    actionButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            if (btn.getAttribute('href') === "#") {
+                e.preventDefault();
+                alert("¡Excelente elección! Estamos preparando la vista de sedes para ti.");
+            }
+        });
+    });
 });
