@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membresías</title>
+    <link rel="stylesheet" href="./assets/css/styleMembresia.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="..">
+                    <img src="../img/logo.png" alt="Logo WorkHub" width="30" height="24"
+                        class="d-inline-block align-text-top me-2"><span class="fw-bold">Co-Work</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Sedes
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Las Condes</a></li>
+                                <li><a class="dropdown-item" href="#">Vitacura</a></li>
+                                <li><a class="dropdown-item" href="#">Lo Barnechea</a></li>
+                                <li><a class="dropdown-item" href="#">Providencia</a></li>
+                                <li><a class="dropdown-item" href="#">Santiago Centro</a></li>
+                                <li><a class="dropdown-item" href="#">La Reina</a></li>
+                                <li><a class="dropdown-item" href="#"></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Soluciones
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Membresías</a></li>
+                                <li><a class="dropdown-item" href="#">Arquitectura</a></li>
+                                <li><a class="dropdown-item" href="#">Eventos y Reuniones</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="ms-auto d-flex gap-2 mt-3 mt-lg-0">
+                        <button class="btn btn-sm btn-outline-danger" type="button">Contáctanos</button>
+                        <button class="btn btn-sm btn-danger" type="button">Login</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero-memberships d-flex align-items-center text-white">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <!-- Titulo -->
+                        <span class="badge rounded-pill text-bg-danger mb-3 px-3">Co-Work</span>
+                        <h1 class="display-3 fw-bold mb-4"> Membresías que se <span class="text-danger">adaptan a
+                                ti</span></h1>
+                        <p class="lead mb-5 ">
+                            En Co-Work ofrecemos soluciones flexibles para freelancers, startups y empresas
+                            consolidadas.
+                            Elige el plan que mejor se ajuste a tu ritmo de trabajo y escala tu negocio con nosotros.
+                        </p>
+                        <!-- Botones -->
+                        <div class="d-flex gap-3">
+                            <a href="#" class="btn btn-danger btn-lg px-4">Ver Planes</a>
+                            <a href="" class="btn btn-outline-light btn-lg px-4">Hablar con un experto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Planes o Membresias -->
+        <section id="planes" class="py-5 bg-light">
+            <div class="container">
+                <!-- Titulo de Seccion Planes o Membresias -->
+                <div class="text-center mb-5">
+                    <h2 class="display-5 fw-bold">Nuestros <span class="text-danger">Planes</span></h2>
+                    <p class="text-secondary">Encuentra el espacio ideal para tu crecimiento profesional.</p>
+                </div>
+
+                <!-- Cards -->
+                <div class="row g-4">
+                    <!-- Card 1: Oficina Privada -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;"
+                                        alt="Oficina Privada">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">OFICINA PRIVADA</h5>
+                                        <p class="card-text small text-muted">Capacidad 3 - 8 personas</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: 24/7</li>
+                                            <li>✅ Sala de reuniones: 20 h</li>
+                                            <li>✅ Wifi, café e impresoras</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Privacidad Total</h5>
+                                    <p class="small">Espacios cerrados y amoblados diseñados para equipos
+                                        que requieren confidencialidad.</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Hot Desk -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Hot Desk">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">HOT DESK</h5>
+                                        <p class="card-text small text-muted">Escritorio compartido</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: Ilimitado</li>
+                                            <li>✅ Sala de reuniones: 10 h</li>
+                                            <li>✅ Comunidad Co-Work</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Flexibilidad Pura</h5>
+                                    [cite_start]<p class="small">Ideal para freelancers que buscan un lugar inspirador
+                                        sin puestos fijos[cite: 72].</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Full Time -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Full Time">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">FULL TIME</h5>
+                                        <p class="card-text small text-muted">Escritorio fijo formal</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: 24/7</li>
+                                            <li>✅ Sala de reuniones: 15 h</li>
+                                            <li>✅ Locker privado</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Tu Propio Lugar</h5>
+                                    [cite_start]<p class="small">Un escritorio reservado exclusivamente para ti con la
+                                        seguridad de tu propio locker[cite: 72, 73].</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Se repiten Cards -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;"
+                                        alt="Oficina Privada">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">OFICINA PRIVADA</h5>
+                                        <p class="card-text small text-muted">Capacidad 3 - 8 personas</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: 24/7</li>
+                                            <li>✅ Sala de reuniones: 20 h</li>
+                                            <li>✅ Wifi, café e impresoras</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Privacidad Total</h5>
+                                    <p class="small">Espacios cerrados y amoblados diseñados para equipos
+                                        que requieren confidencialidad.</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Se repiten Cards -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Hot Desk">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">HOT DESK</h5>
+                                        <p class="card-text small text-muted">Escritorio compartido</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: Ilimitado</li>
+                                            <li>✅ Sala de reuniones: 10 h</li>
+                                            <li>✅ Comunidad Co-Work</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Flexibilidad Pura</h5>
+                                    [cite_start]<p class="small">Ideal para freelancers que buscan un lugar inspirador
+                                        sin puestos fijos[cite: 72].</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Se repiten Cards -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front card shadow-sm border-0">
+                                    <img src="../img/jpg/oficina-privada.jpg"
+                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Full Time">
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title fw-bold text-dark">FULL TIME</h5>
+                                        <p class="card-text small text-muted">Escritorio fijo formal</p>
+                                        <hr>
+                                        <ul class="list-unstyled small">
+                                            <li>✅ Acceso: 24/7</li>
+                                            <li>✅ Sala de reuniones: 15 h</li>
+                                            <li>✅ Locker privado</li>
+                                        </ul>
+                                        <p class="text-center text-danger small mt-2">Gira para más info ↺</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flip-card-back card shadow-sm border-0 bg-danger text-white p-4 d-flex flex-column justify-content-center">
+                                    <h5 class="fw-bold mb-3">Tu Propio Lugar</h5>
+                                    [cite_start]<p class="small">Un escritorio reservado exclusivamente para ti con la
+                                        seguridad de tu propio locker[cite: 72, 73].</p>
+                                    <button class="btn btn-light text-danger fw-bold mt-3">¡Lo quiero!</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white pt-5 pb-4 border-top">
+        <div class="container text-center text-md-start">
+            <div class="row text-center text-md-start">
+
+                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
+                    <img src="./assets/img/logo.png" alt="Logo Co-Work" width="150" class="mb-4">
+                    <p class="small text-secondary mb-2">
+                        <i class="bi bi-geo-alt-fill me-2"></i>Av. Apoquindo 2930, Piso 2, Las Condes.
+                    </p>
+                    <p class="small text-secondary mb-2">
+                        <i class="bi bi-envelope-fill me-2"></i>contacto@coworklatam.com
+                    </p>
+                    <p class="small text-secondary">
+                        <i class="bi bi-telephone-fill me-2"></i>+56 9 8513 5860
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 fw-bold text-danger">Mapa del Sitio</h6>
+                    <p><a href="./index.html" class="text-secondary text-decoration-none small">Home</a></p>
+                    <p><a href="#" class="text-secondary text-decoration-none small">Sedes</a></p>
+                    <p><a href="#" class="text-secondary text-decoration-none small">Membresías</a></p>
+                </div>
+
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 fw-bold text-danger">Síguenos</h6>
+                    <div class="d-flex justify-content-center justify-content-md-start gap-3">
+                        <a href="#" class="text-secondary fs-4"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary fs-4"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary fs-4"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4 mt-5">
+
+            <div class="row align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p class="small text-secondary">Copyright © 2025 <strong>Co-Work LATAM</strong>. Todos los
+                        derechos reservados.</p>
+                </div>
+                <div class="col-md-5 col-lg-4 text-center text-md-end">
+                    <p><a href="#" class="text-secondary text-decoration-none small">Privacidad</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+        </script>
+
+</body>
+
+</html>
