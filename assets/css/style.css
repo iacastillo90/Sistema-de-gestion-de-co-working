@@ -1,7 +1,7 @@
 /* ==========================================================================
-   VARIABLES GLOBALES Y RESET
-   Paleta unificada del equipo — editada en conjunto
-   ========================================================================== */
+    VARIABLES GLOBALES Y RESET
+    Paleta unificada del equipo — editada en conjunto
+========================================================================== */
 :root {
     --primary-red:  #D12026;
     --dark-text:    #1d1d1b;
@@ -29,9 +29,9 @@ body {
 }
 
 /* ==========================================================================
-   COMPONENTES GLOBALES
-   Clases reutilizables en toda la página
-   ========================================================================== */
+    COMPONENTES GLOBALES
+    Clases reutilizables en toda la página
+========================================================================== */
 
 /* Botón rojo principal — usado en navbar, CTA y footer */
 .btn-contact {
@@ -92,10 +92,10 @@ body {
 }
 
 /* ==========================================================================
-   ANDREA — Navbar
-   Sección: <header> / #mainNav
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    ANDREA — Navbar
+    Sección: <header> / #mainNav
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 header .navbar {
     padding: 15px 0;
     background: var(--white);
@@ -133,13 +133,13 @@ header .nav-link:hover {
 }
 
 /* ==========================================================================
-   ANDREA — Hero Principal
-   Sección: #hero
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    ANDREA — Hero Principal
+    Sección: #hero
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 #hero {
     height: 100vh;
-    background: url('../img/coworking.jpg') no-repeat center center / cover;
+    background: url('../img/jpg/coworking.jpg') no-repeat center center / cover;
     position: relative;
     padding-top: 90px;
     display: flex;         /* centra el contenido verticalmente */
@@ -182,10 +182,10 @@ header .nav-link:hover {
 }
 
 /* ==========================================================================
-   JP — Cards de Espacios
-   Sección: #espacios
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    JP — Cards de Espacios
+    Sección: #espacios
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 #espacios .card {
     border: none;
     border-radius: 10px;
@@ -211,12 +211,12 @@ header .nav-link:hover {
 #espacios .card a:hover { color: #a5181e; }
 
 /* ==========================================================================
-   JP — Banner CTA Intermedio
-   Sección: #cta-banner
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    JP — Banner CTA Intermedio
+    Sección: #cta-banner
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 #cta-banner {
-    background-image: url('../img/work.jpg');
+    background-image: url('../img/jpg/work.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* efecto parallax suave */
@@ -235,10 +235,10 @@ header .nav-link:hover {
 /* El contenido usa position-relative z-2 de Bootstrap en el HTML */
 
 /* ==========================================================================
-   FELIPE — Sección Sobre Nosotros (completa)
-   Sección: #sobre-nosotros
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    FELIPE — Sección Sobre Nosotros (completa)
+    Sección: #sobre-nosotros
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 
 /* La sección ocupa ancho completo;
    el .container de Bootstrap dentro ya limita y centra el contenido */
@@ -531,10 +531,10 @@ header .nav-link:hover {
 }
 
 /* ==========================================================================
-   ALEX — Formulario de Registro
-   Sección: #registro
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    ALEX — Formulario de Registro
+    Sección: #registro
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 
 /* Grid de 2 columnas: imagen izquierda | formulario derecha */
 #registro {
@@ -633,10 +633,10 @@ header .nav-link:hover {
 }
 
 /* ==========================================================================
-   ALEX — Footer
-   Sección: footer#contacto
-   Para seguir editando: agrega tus reglas debajo de este bloque
-   ========================================================================== */
+    ALEX — Footer
+    Sección: footer#contacto
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
 #contacto {
     background-color: #222;
     color: var(--white);
@@ -685,3 +685,61 @@ header .nav-link:hover {
     display: inline-block;
 }
 #contacto .footer-bottom a:hover { color: var(--white); }
+
+
+/* ==========================================================================
+    Ivan — Html Membresías
+    Sección: #membresias
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
+
+.hero-memberships {
+    min-height: 92vh;
+    background-position: center center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                    url('../img/jpg/hero-memberships.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hero-memberships .lead {
+    color: #e0e0e0;
+    max-width: 600px;
+}
+
+/* Configuración de la Flip Card */
+.flip-card {
+    background-color: transparent;
+    height: 400px; /* Ajusta según necesites */
+    perspective: 1000px; 
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* El efecto HOVER */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Oculta la cara trasera al girar */
+    backface-visibility: hidden;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.flip-card-back {
+    background-color: #ffffff;
+    color: #333;
+    transform: rotateY(180deg);
+}

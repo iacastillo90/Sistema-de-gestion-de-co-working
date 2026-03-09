@@ -5,62 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Membresías</title>
-    <link rel="stylesheet" href="./assets/css/styleMembresia.css">
+    <link rel="icon" type="image/png" href="./assets/img/logo/favicon.ico">
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top">
+
+        <nav class="navbar navbar-expand-lg fixed-top transition-all" id="mainNav">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="..">
-                    <img src="../img/logo.png" alt="Logo WorkHub" width="30" height="24"
-                        class="d-inline-block align-text-top me-2"><span class="fw-bold">Co-Work</span>
+                <a class="navbar-brand" href="../../index.html" aria-label="Ir al inicio">
+                    <img src="../img/logo/Logo.png" alt="Logo de Jaffa CoWork" class="nav-logo-icon">
+                    <span class="brand-text">JAFFA <small>CoWork</small></span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-                    aria-label="Toggle navigation">
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Alternar navegación">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
-                        </li>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Sedes
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Las Condes</a></li>
-                                <li><a class="dropdown-item" href="#">Vitacura</a></li>
-                                <li><a class="dropdown-item" href="#">Lo Barnechea</a></li>
-                                <li><a class="dropdown-item" href="#">Providencia</a></li>
-                                <li><a class="dropdown-item" href="#">Santiago Centro</a></li>
-                                <li><a class="dropdown-item" href="#">La Reina</a></li>
-                                <li><a class="dropdown-item" href="#"></a></li>
+                                aria-expanded="false">Sedes</a>
+                            <ul class="dropdown-menu border-0 shadow-sm">
+                                <li><a class="dropdown-item" href="#">Chile</a></li>
+                                <li><a class="dropdown-item" href="#">Colombia</a></li>
+                                <li><a class="dropdown-item" href="#">EEUU</a></li>
                             </ul>
                         </li>
+
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Soluciones
-                            </a>
-                            <ul class="dropdown-menu">
+                            <button class="nav-link dropdown-toggle border-0 bg-transparent" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">Soluciones</button>
+                            <ul class="dropdown-menu border-0 shadow-sm">
+                                <!-- ✅ El href de navegación va aquí, en el item -->
                                 <li><a class="dropdown-item" href="#">Membresías</a></li>
-                                <li><a class="dropdown-item" href="#">Arquitectura</a></li>
-                                <li><a class="dropdown-item" href="#">Eventos y Reuniones</a></li>
+                                <li><a class="dropdown-item" href="#">Salas de Reunión</a></li>
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Usuarios</a>
+                        </li>
+
+                        <li class="nav-item ms-lg-3">
+                            <a href="https://wa.me/56912345678" target="_blank" rel="noopener noreferrer"
+                                class="btn-contact btn-arrow-css">¡Contáctanos!</a>
+                        </li>
+
+                        <li class="nav-item ms-lg-3">
+                            <a href="../html/login.html" target="_blank" rel="noopener noreferrer"
+                                class="btn-contact btn-arrow-css">Login</a>
+                        </li>
+
                     </ul>
-                    <div class="ms-auto d-flex gap-2 mt-3 mt-lg-0">
-                        <button class="btn btn-sm btn-outline-danger" type="button">Contáctanos</button>
-                        <button class="btn btn-sm btn-danger" type="button">Login</button>
-                    </div>
                 </div>
             </div>
         </nav>
@@ -108,9 +116,8 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;"
-                                        alt="Oficina Privada">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Oficina Privada">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">OFICINA PRIVADA</h5>
                                         <p class="card-text small text-muted">Capacidad 3 - 8 personas</p>
@@ -139,8 +146,8 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Hot Desk">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Hot Desk">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">HOT DESK</h5>
                                         <p class="card-text small text-muted">Escritorio compartido</p>
@@ -169,8 +176,8 @@
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Full Time">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Full Time">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">FULL TIME</h5>
                                         <p class="card-text small text-muted">Escritorio fijo formal</p>
@@ -194,14 +201,13 @@
                         </div>
                     </div>
 
-                    <!-- Se repiten Cards -->
+                    <!-- Cards 4 -->
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;"
-                                        alt="Oficina Privada">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Oficina Privada">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">OFICINA PRIVADA</h5>
                                         <p class="card-text small text-muted">Capacidad 3 - 8 personas</p>
@@ -225,13 +231,13 @@
                         </div>
                     </div>
 
-                    <!-- Se repiten Cards -->
+                    <!-- Cards 5 -->
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Hot Desk">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Hot Desk">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">HOT DESK</h5>
                                         <p class="card-text small text-muted">Escritorio compartido</p>
@@ -255,13 +261,13 @@
                         </div>
                     </div>
 
-                    <!-- Se repiten Cards -->
+                    <!-- Cards 6 -->
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front card shadow-sm border-0">
-                                    <img src="../img/jpg/oficina-privada.jpg"
-                                        class="card-img-top object-fit-cover" style="height: 200px;" alt="Full Time">
+                                    <img src="../img/jpg/oficina-privada.jpg" class="card-img-top object-fit-cover"
+                                        style="height: 200px;" alt="Full Time">
                                     <div class="card-body text-start">
                                         <h5 class="card-title fw-bold text-dark">FULL TIME</h5>
                                         <p class="card-text small text-muted">Escritorio fijo formal</p>
@@ -290,51 +296,20 @@
 
     </main>
 
-    <footer class="bg-white pt-5 pb-4 border-top">
-        <div class="container text-center text-md-start">
-            <div class="row text-center text-md-start">
-
-                <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mt-3">
-                    <img src="./assets/img/logo.png" alt="Logo Co-Work" width="150" class="mb-4">
-                    <p class="small text-secondary mb-2">
-                        <i class="bi bi-geo-alt-fill me-2"></i>Av. Apoquindo 2930, Piso 2, Las Condes.
-                    </p>
-                    <p class="small text-secondary mb-2">
-                        <i class="bi bi-envelope-fill me-2"></i>contacto@coworklatam.com
-                    </p>
-                    <p class="small text-secondary">
-                        <i class="bi bi-telephone-fill me-2"></i>+56 9 8513 5860
-                    </p>
-                </div>
-
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 fw-bold text-danger">Mapa del Sitio</h6>
-                    <p><a href="./index.html" class="text-secondary text-decoration-none small">Home</a></p>
-                    <p><a href="#" class="text-secondary text-decoration-none small">Sedes</a></p>
-                    <p><a href="#" class="text-secondary text-decoration-none small">Membresías</a></p>
-                </div>
-
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 fw-bold text-danger">Síguenos</h6>
-                    <div class="d-flex justify-content-center justify-content-md-start gap-3">
-                        <a href="#" class="text-secondary fs-4"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="text-secondary fs-4"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="text-secondary fs-4"><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="mb-4 mt-5">
-
-            <div class="row align-items-center">
-                <div class="col-md-7 col-lg-8">
-                    <p class="small text-secondary">Copyright © 2025 <strong>Co-Work LATAM</strong>. Todos los
-                        derechos reservados.</p>
-                </div>
-                <div class="col-md-5 col-lg-4 text-center text-md-end">
-                    <p><a href="#" class="text-secondary text-decoration-none small">Privacidad</a></p>
-                </div>
-            </div>
+    <footer id="contacto">
+        <div class="footer-info">
+            <p><i class="fas fa-phone-alt me-2"></i> +56 9 1234 5678</p>
+            <p><i class="fas fa-envelope me-2"></i> contacto@jaffacowork.com</p>
+            <p><i class="fas fa-map-marker-alt me-2"></i> Av. Alameda Libertador Bernardo O'Higgins 1255, Santiago</p>
+        </div>
+        <div class="footer-social">
+            <a href="#" aria-label="Síguenos en Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Síguenos en Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Síguenos en LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="footer-bottom">
+            <a href="#">Política de Privacidad</a>
+            <p>&copy; 2026 WorkHub CoWork | Colmena Code Generation23.</p>
         </div>
     </footer>
 
