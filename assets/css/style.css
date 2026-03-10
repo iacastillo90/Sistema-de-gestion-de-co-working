@@ -708,9 +708,10 @@ header .nav-link:hover {
 }
 
 /* Configuración de la Flip Card */
+/* Configuración de la Flip Card */
 .flip-card {
     background-color: transparent;
-    height: 400px; /* Ajusta según necesites */
+    height: 450px; /* Asegúrate de que esta altura sea suficiente para tu contenido */
     perspective: 1000px; 
 }
 
@@ -721,6 +722,7 @@ header .nav-link:hover {
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    /* Eliminamos posibles paddings que afecten el giro */
 }
 
 /* El efecto HOVER */
@@ -732,14 +734,25 @@ header .nav-link:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Oculta la cara trasera al girar */
+    -webkit-backface-visibility: hidden; 
     backface-visibility: hidden;
     border-radius: 1rem;
     overflow: hidden;
+    /* Forzamos que coincidan en el punto 0,0 */
+    top: 0;
+    left: 0;
+    margin: 0
+}
+
+/* Ajuste específico para la cara frontal */
+.flip-card-front {
+    z-index: 2;
+    transform: rotateY(0deg);
 }
 
 .flip-card-back {
     background-color: #ffffff;
     color: #333;
     transform: rotateY(180deg);
+    z-index: 1;
 }
