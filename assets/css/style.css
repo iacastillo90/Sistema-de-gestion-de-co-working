@@ -398,7 +398,7 @@ header .nav-link:hover {
 /* Pilares estratégicos — layout asimétrico de 12 columnas */
 #sobre-nosotros .feature-block {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(12, 1fr);
     gap: 14px;
 }
 
@@ -517,9 +517,11 @@ header .nav-link:hover {
 
 /* --- Responsive — Sobre Nosotros --- */
 @media (max-width: 1120px) {
-    #sobre-nosotros .top-row {
-        grid-template-columns: 1fr;
-    }
+    #sobre-nosotros .feature-block{
+    display: grid;
+    grid-template-columns: repeat(12,1fr);
+    gap: 14px;
+}
 }
 
 @media (max-width: 920px) {
