@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // emailRegex: formato estándar usuario@dominio.extension
             const emailRegex    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             // telefonoRegex: acepta números, espacios y '+' para códigos de país (ej: +56 9 1234 5678)
-            const telefonoRegex = /^[0-9+\s]{8,15}$/;
+            const telefonoRegex = /^\+56[0-9]{9}$/;
 
             // --- Validaciones (cada return corta la ejecución si hay error) ---
 
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            if (password.length < 6) {
+            if (password.length < 8) {
                 mostrarMensaje("La contraseña debe tener al menos 6 caracteres.", "var(--primary-red)");
                 return;
             }
