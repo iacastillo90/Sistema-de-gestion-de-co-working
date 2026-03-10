@@ -139,7 +139,7 @@ header .nav-link:hover {
 ========================================================================== */
 #hero {
     height: 100vh;
-    background: url('../img/jpg/cowomen-1.jpg') no-repeat center center / cover;
+    background: url('../img/jpg/portada.jpg') no-repeat center center / cover;
     position: relative;
     padding-top: 90px;
     display: flex;         /* centra el contenido verticalmente */
@@ -217,7 +217,7 @@ text-shadow: 2px 8px 4px rgba(0, 0, 0, 0.6); }
     Para seguir editando: agrega tus reglas debajo de este bloque
 ========================================================================== */
 #cta-banner {
-    background-image: url('../img/jpg/work.jpg');
+    background-image: url('../img/jpg/work..jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* efecto parallax suave */
