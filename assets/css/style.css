@@ -139,7 +139,7 @@ header .nav-link:hover {
 ========================================================================== */
 #hero {
     height: 100vh;
-    background: url('../img/jpg/coworking.jpg') no-repeat center center / cover;
+    background: url('../img/jpg/cowomen-1.jpg') no-repeat center center / cover;
     position: relative;
     padding-top: 90px;
     display: flex;         /* centra el contenido verticalmente */
@@ -149,12 +149,13 @@ header .nav-link:hover {
 #hero .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(46, 44, 44, 0.8) 0%, rgba(56, 54, 54, 0.4) 10%);
     z-index: 1;
     /* El contenido usa position-relative z-2 de Bootstrap en el HTML */
 }
 
-#hero .text-primary-red { color: var(--primary-red); }
+#hero .text-primary-red { color: var(--primary-red);
+text-shadow: 2px 8px 4px rgba(0, 0, 0, 0.6); }
 
 #hero .btn-white {
     background-color: var(--white);
