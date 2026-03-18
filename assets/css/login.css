@@ -1,0 +1,205 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+:root {
+    --primary-red: #D12026;
+    --dark-text: #1d1d1b;
+    --white: #ffffff;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Navbar */
+.navbar {
+    padding: 15px 0;
+    background: var(--white);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+ 
+/* Logo y links oscuros */
+.brand-text {
+    font-weight: 700;
+    color: var(--dark-text);
+}
+ 
+.nav-logo-icon {
+    width: 60px;
+    height: 60px;
+   
+}
+ 
+.nav-link {
+    color: var(--dark-text) !important;
+    font-weight: 600;
+    transition: var(--transition);
+}
+ 
+.nav-link:hover {
+    color: var(--primary-red) !important;
+}
+
+.btn-contact{
+  background: #dc3545;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.btn-contact:hover{
+  background: #c82333;
+}
+
+/* Fondo */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/png/fondo-login.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Centrar contenido */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 40px;
+  min-height: 100vh;
+}
+
+/* Caja login */
+.login-box {
+  background: rgba(255, 255, 255, 0.952);
+  width: 500px;
+  padding: 40px;
+  border-radius: 20px; 
+}
+
+/* Título */
+.login-box h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+  }
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 15px 0;
+  border-radius: 8px; 
+  border: 1px solid #ccc;
+}
+
+/* Botón */
+button {
+  width: 100%;
+  padding: 12px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px; 
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #c82333;
+}
+
+.signup-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 15px;
+  text-align: center;
+}
+
+
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  .login-box {
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================================
+    ALEX — Footer
+    Sección: footer#contacto
+    Para seguir editando: agrega tus reglas debajo de este bloque
+========================================================================== */
+#contacto {
+    background-color: #222;
+    color: var(--white);
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+#contacto .footer-info p {
+    margin-bottom: 5px;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+#contacto .footer-social { margin: 12px 0; }
+
+#contacto .footer-social a {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 0 10px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transition);
+}
+#contacto .footer-social a:hover {
+    background: var(--primary-red);
+    transform: translateY(-3px);
+}
+
+#contacto .footer-bottom {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #888;
+    font-size: 0.85rem;
+}
+
+#contacto .footer-bottom a {
+    color: #888;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+#contacto .footer-bottom a:hover { color: var(--white); }
