@@ -113,89 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /**
-   * Función auxiliar compartida
-   * Muestra un mensaje en el span #mensaje con el color indicado
-   * @param {string} texto  - Mensaje a mostrar
-   * @param {string} color  - Color CSS válido (hex, nombre, var())
-   */
-  function mostrarMensaje(texto, color) {
-    mensajeAlerta.textContent = texto;
-    mensajeAlerta.style.color = color;
-  }
+    /**
+     * Función auxiliar compartida
+     * Muestra un mensaje en el span #mensaje con el color indicado
+     * @param {string} texto  - Mensaje a mostrar
+     * @param {string} color  - Color CSS válido (hex, nombre, var())
+     */
+    function mostrarMensaje(texto, color) {
+        mensajeAlerta.textContent = texto;
+        mensajeAlerta.style.color = color;
+    }
+
 });
-
-class espacioPublico {
-  constructor(
-    id,
-    nombre,
-    descripcion,
-    precio,
-    imagen,
-    capacidad,
-    ubicacion,
-    disponibilidad,
-  ) {
-    this.id = id;
-    this.nombre = nombre;
-    this.descripcion = descripcion;
-    this.precio = precio;
-    this.imagen = imagen;
-    this.capacidad = capacidad;
-    this.ubicacion = ubicacion;
-    this.disponibilidad = true;
-  }
-
-  renderCard() {
-    return `
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <img src="${this.imagen}"loading="lazy"class="card-img-top"alt="${this.nombre}"/>
-                    <div class="card-body d-flex flex-column">
-                    <h3 class="h5 card-title">${this.nombre}</h3>
-                    <p class="card-text flex-grow-1">
-                        ${this.descripcion}
-                </p>
-                <ul class= "list-unstyled small mb-3">
-                    <li>Capacidad: ${this.capacidad}</li>
-                    <li>Precio: $${this.precio}</li>
-                    <li>Disponibilidad: ${this.disponibilidad ? 'Sí' : 'No'}</li>
-                    <li>Ubicación: ${this.ubicacion}</li>
-                </ul>
-                <a href = "#registro" class="btn btn-primary mt-auto">Reservar</a>
-                </div>
-            </div>
-        `;
-  }
-}
-
-const listaEspacios = [
-    new espacioPublico(
-        1,
-        "Flex",
-        "Espacio abierto con escritorios compartidos, ideal para freelancers y startups.",
-        5000,
-        "Sala 1"
-        3000,
-        true,
-    ),
-
-
-    new espacioPublico(
-        2,
-        "Hot Desk",
-        "Area común con escritorios disponibles por orden de llegada, perfecta para quienes buscan flexibilidad.",
-        "./assets/img/jpg/oficina-priovada.jpg",
-        30,
-        "Sala 2",
-        20000,true
-    ),
-
-    new espacioPublico(
-        3,
-        "Full Time",
-        "Tu espacio siempre tuyo! un puesto de trabajo"
-    )
-];
-
-
