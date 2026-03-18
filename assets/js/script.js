@@ -167,7 +167,9 @@ class espacioPublico {
                             <li>🟢 Disponible ${this.disponibilidad}</li>
                             <li>📍 Ubicación: ${this.ubicacion}</li>
                         </ul>
-                        <a href="#registro" class=" btn btn-primary mt-auto"
+                        <a 
+                        href="#registro" 
+                        class=" btn-contact btn-arrow-css mt-auto"
                         >Reserva Ahora!</a>
                     </div>
                 </div>
