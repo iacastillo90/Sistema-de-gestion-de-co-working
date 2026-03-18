@@ -113,6 +113,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+    /**
+     * Función auxiliar compartida
+     * Muestra un mensaje en el span #mensaje con el color indicado
+     * @param {string} texto  - Mensaje a mostrar
+     * @param {string} color  - Color CSS válido (hex, nombre, var())
+     */
+    function mostrarMensaje(texto, color) {
+        mensajeAlerta.textContent = texto;
+        mensajeAlerta.style.color = color;
+    }
+
+});
   /**
    * Función auxiliar compartida
    * Muestra un mensaje en el span #mensaje con el color indicado
@@ -221,5 +233,3 @@ const mostrarEspacios = () => {
 }
 
 document.addEventListener("DOMContentLoaded", mostrarEspacios());
-
-git 
