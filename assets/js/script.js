@@ -181,7 +181,7 @@ class espacioPublico {
                         </ul>
                         <a 
                         href="#registro" 
-                        class=" btn-contact btn-arrow-css mt-auto"
+                        class=" btn-contact btn-arrow-css mt-auto btn-reservas"
                         >Reserva Ahora!</a>
                     </div>
                 </div>
