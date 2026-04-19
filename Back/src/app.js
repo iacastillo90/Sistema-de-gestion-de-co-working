@@ -1,11 +1,16 @@
 const express = require("express");
+const spaceRoutes = require("./routes/space.routes");
+const reservationsRoutes = require("./routes/reservations.routes");
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
+//Rutas de Space
+app.use("/api/space", spaceRoutes);
+
+//Rutas de Reservations
+app.use("/api/reservations", reservationsRoutes);
+
 
 module.exports = app;
