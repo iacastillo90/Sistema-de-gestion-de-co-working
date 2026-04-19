@@ -1,12 +1,9 @@
 const express = require("express").Router();
 const router = express.Router();
-const spaceController = require("../controllers/space.controller");
+const { getSpaces } = require("../controllers/space.controllers");
 
-router.get("/", spaceController.findAll);
-router.get("/:id", spaceController.findOne);
-router.post("/", spaceController.create);
-router.put("/:id", spaceController.update);
-router.delete("/:id", spaceController.delete);
+router.get("/", getSpaces);
+
 
 module.exports = router;
 
