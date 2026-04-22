@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "nombre": "Flex",
+    "descripcion": "Espacio de trabajo flexible con acceso 24/7, ideal para freelancers y startups.",
+    "imagen": "https://www.primoprint.com/blog/wp-content/uploads/2018/11/everything-about-a-coworking-space.jpg",
+    "capacidad": 50,
+    "ubicacion": "Sala 1",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 2,
+    "nombre": "Hot Desk",
+    "descripcion": "Área común con escritorios compartidos, perfecta para quienes buscan un ambiente dinámico.",
+    "imagen": "https://blog.comunal.co/hubfs/todas%20las%20oficinas%20que%20encuentras%20en%20un%20coworking.png",
+    "capacidad": 30,
+    "ubicacion": "Sala 2",
+    "precio": 20000,
+    "disponibilidad": true
+  },
+  {
+    "id": 3,
+    "nombre": "Full Time",
+    "descripcion": "¡Tu espacio, siempre tuyo! Un puesto de trabajo dedicado en nuestra comunidad.",
+    "imagen": "https://ivoryarquitectura.com/wp-content/uploads/2019/06/Diseno-oficinas-coworking.webp",
+    "capacidad": 60,
+    "ubicacion": "Sala 3",
+    "precio": 40000,
+    "disponibilidad": true
+  },
+  {
+    "id": 4,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 5,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 6,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "disponibilidad": true
+  }
+]
