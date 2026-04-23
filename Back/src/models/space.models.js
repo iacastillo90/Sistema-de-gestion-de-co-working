@@ -26,16 +26,25 @@ const createSpace = async (space) => {
     return space;
 };
 
-const updateSpace = async (space) => {
-    
+const updateSpace = async (id, space) => {
+    const spaces = await readSpaces();
+    const index = spaces.findIndex(s => s.id === id);
+    if (index === -1) return null;
+    spaces[index] = { ...spaces[index], ...space, id };
+    await writeSpaces(spaces);
+    return spaces[index];
 };
 
-const deleteSpace = async (space) => {
-    
+const deleteSpace = async (id) => {
+    const spaces = await readSpaces();
+    const filteredSpaces = spaces.filter(s => s.id !== id);
+    await writeSpaces(filteredSpaces);
+    return filteredSpaces.length < spaces.length;
 };
 
-const getSpaceById = async (space) => {
-    
+const getSpaceById = async (id) => {
+    const spaces = await readSpaces();
+    return spaces.find(s => s.id === id) || null;
 };
 
 module.exports = {
@@ -44,4 +53,4 @@ module.exports = {
     updateSpace,
     deleteSpace,
     getSpaceById
-}
+};

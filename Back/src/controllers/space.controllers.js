@@ -45,7 +45,65 @@ const newSpace = async (req, res) =>{
     
 }
 
+const getSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const space = await getSpaceById(Number(id));
+        if (!space) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        res.status(200).json(space);
+    } catch (error) {
+        console.log("Error al obtener el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const editSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
+        
+        const updatedSpace = await updateSpace(Number(id), {
+            nombre,
+            descripcion,
+            imagen,
+            capacidad,
+            ubicacion,
+            precio
+        });
+        
+        if (!updatedSpace) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        
+        res.status(200).json(updatedSpace);
+    } catch (error) {
+        console.log("Error al actualizar el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const removeSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await deleteSpace(Number(id));
+        
+        if (!deleted) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        
+        res.status(200).json({ msg: "Espacio eliminado correctamente" });
+    } catch (error) {
+        console.log("Error al eliminar el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     getSpaces,
-    newSpace
+    newSpace,
+    getSpace,
+    editSpace,
+    removeSpace
 }
