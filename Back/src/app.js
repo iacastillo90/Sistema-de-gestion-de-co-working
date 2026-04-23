@@ -6,6 +6,9 @@ const reservationsRoutes = require("./routes/reservations.routes");
 const reviewRoutes = require("./routes/review.routes");
 const userRoutes = require("./routes/users.router");
 const auth = require("./middlewares/auth");
+const locationRoutes = require("./routes/location.routes");
+
+app.use("/api/locations", locationRoutes);
 
 
 
