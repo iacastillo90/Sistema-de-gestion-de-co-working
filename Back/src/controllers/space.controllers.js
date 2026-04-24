@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const { getAllSpace, createSpace, updateSpace, deleteSpace, getSpaceById } = require("../models/space.models");
+=======
+const { getAllSpace, createSpace } = require("../models/space.models");
+>>>>>>> origin/migracionAlex
 
 
 const getSpaces = async (req, res) => {
@@ -45,6 +49,7 @@ const newSpace = async (req, res) =>{
     
 }
 
+<<<<<<< HEAD
 const getSpace = async (req, res) => {
     try {
         const { id } = req.params;
@@ -106,4 +111,9 @@ module.exports = {
     getSpace,
     editSpace,
     removeSpace
+=======
+module.exports = {
+    getSpaces,
+    newSpace
+>>>>>>> origin/migracionAlex
 }

@@ -26,6 +26,7 @@ const createSpace = async (space) => {
     return space;
 };
 
+<<<<<<< HEAD
 const updateSpace = async (id, space) => {
     const spaces = await readSpaces();
     const index = spaces.findIndex(s => s.id === id);
@@ -45,6 +46,18 @@ const deleteSpace = async (id) => {
 const getSpaceById = async (id) => {
     const spaces = await readSpaces();
     return spaces.find(s => s.id === id) || null;
+=======
+const updateSpace = async (space) => {
+    
+};
+
+const deleteSpace = async (space) => {
+    
+};
+
+const getSpaceById = async (space) => {
+    
+>>>>>>> origin/migracionAlex
 };
 
 module.exports = {
@@ -53,4 +66,8 @@ module.exports = {
     updateSpace,
     deleteSpace,
     getSpaceById
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> origin/migracionAlex
