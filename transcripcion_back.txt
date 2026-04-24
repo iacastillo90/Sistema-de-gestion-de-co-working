@@ -1,0 +1,1019 @@
+TRANSCRIPCIÓN DEL PROYECTO (CARPETA BACK)
+
+
+================================================================================
+Nombre del archivo: reservations.json
+Ruta: data\reservations.json
+================================================================================
+
+[
+    
+]
+
+
+================================================================================
+Nombre del archivo: reviews.json
+Ruta: data\reviews.json
+================================================================================
+
+[]
+
+
+
+================================================================================
+Nombre del archivo: space.json
+Ruta: data\space.json
+================================================================================
+
+[
+  {
+    "id": 1,
+    "nombre": "Flex",
+    "descripcion": "Espacio de trabajo flexible con acceso 24/7, ideal para freelancers y startups.",
+    "imagen": "https://www.primoprint.com/blog/wp-content/uploads/2018/11/everything-about-a-coworking-space.jpg",
+    "capacidad": 50,
+    "ubicacion": "Sala 1",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 2,
+    "nombre": "Hot Desk",
+    "descripcion": "Área común con escritorios compartidos, perfecta para quienes buscan un ambiente dinámico.",
+    "imagen": "https://blog.comunal.co/hubfs/todas%20las%20oficinas%20que%20encuentras%20en%20un%20coworking.png",
+    "capacidad": 30,
+    "ubicacion": "Sala 2",
+    "precio": 20000,
+    "disponibilidad": true
+  },
+  {
+    "id": 3,
+    "nombre": "Full Time",
+    "descripcion": "¡Tu espacio, siempre tuyo! Un puesto de trabajo dedicado en nuestra comunidad.",
+    "imagen": "https://ivoryarquitectura.com/wp-content/uploads/2019/06/Diseno-oficinas-coworking.webp",
+    "capacidad": 60,
+    "ubicacion": "Sala 3",
+    "precio": 40000,
+    "disponibilidad": true
+  },
+  {
+    "id": 4,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 5,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "precio": 30000,
+    "disponibilidad": true
+  },
+  {
+    "id": 6,
+    "nombre": "Sala de Innovación",
+    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
+    "imagen": "http://img.workhub.com/sala1.jpg",
+    "capacidad": 30,
+    "ubicacion": "Santiago, Centro",
+    "disponibilidad": true
+  }
+]
+
+
+================================================================================
+Nombre del archivo: package.json
+Ruta: package.json
+================================================================================
+
+{
+  "name": "co-working-jaffa",
+  "version": "1.0.0",
+  "description": "El corazón digital de WorkHub. Este backend nace para poner orden al caos, transformando la gestión manual de espacios en una experiencia fluida y sin fricciones para nuestra comunidad de coworking",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iacastillo90/Sistema-de-gestion-de-co-working.git"
+  },
+  "keywords": [
+    "coworking",
+    "gestión-de-reservas",
+    "express",
+    "nodejs",
+    "mern-stack",
+    "api-rest",
+    "workhub",
+    "jaffa",
+    "productividad",
+    "desarrollo-profesional"
+  ],
+  "author": "ColmenaCode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iacastillo90/Sistema-de-gestion-de-co-working/issues"
+  },
+  "homepage": "https://github.com/iacastillo90/Sistema-de-gestion-de-co-working#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
+
+
+
+================================================================================
+Nombre del archivo: app.js
+Ruta: src\app.js
+================================================================================
+
+
+const express = require("express");
+const morgan = require("morgan")
+const spaceRoutes = require("./routes/space.routes");
+const reservationsRoutes = require("./routes/reservations.routes");
+const reviewRoutes = require("./routes/review.routes");
+const userRoutes = require("./routes/users.router");
+const auth = require("./middlewares/auth");
+
+
+
+const app = express();
+
+//Middlewares
+app.use(express.json());  // Middlewares Incorporado en Express.js
+app.use(morgan("dev"));   // Middlewares de Terceros
+
+//Rutas de Space
+app.use("/api/spaces", spaceRoutes);
+
+//Rutas de Reservations
+app.use("/api/reservations", reservationsRoutes);
+
+//Rutas de Reviews
+app.use("/api/reviews", reviewRoutes);
+
+
+//Rutas de Gestion de usuario
+app.use("/api/users", userRoutes);
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ message: "Error Interno del Servidor" });
+});
+
+module.exports = app;
+
+
+================================================================================
+Nombre del archivo: reservations.controllers.js
+Ruta: src\controllers\reservations.controllers.js
+================================================================================
+
+const { getAllReservations, createReservation } = require("../models/reservations.models")
+
+const getReservation = async (req, res) => {
+
+    try {
+        const reservations = await getAllReservations();
+        res.status(200).json(reservations);
+    } catch (error) {
+        console.log("Error al obtener las reservas:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const newReservations = async (req, res) => {
+    
+    const { spaceId, date, timeStart, timeEnd } = req.body;
+    
+
+    try {
+        const newId = reservations.length ? Math.max(...reservations.map(elem => elem.id)) + 1 : 1;
+        
+        const newReservation = {
+            id: newId,
+            spaceId,
+            date,
+            timeStart,
+            timeEnd
+        };
+        const reservationCreated = await createReservation(newReservation);
+        
+    } catch (error) {
+        
+        console.log("Error al crear la reserva:", error);
+        res.status(500).json({ error: error.message });
+    }
+
+
+}
+
+module.exports = {
+    getReservation,
+    newReservations
+}
+
+
+================================================================================
+Nombre del archivo: review.controllers.js
+Ruta: src\controllers\review.controllers.js
+================================================================================
+
+const reviewModel = require('../models/review.models');
+
+const getAll = async (req, res) => {
+  try {
+    const reviews = await reviewModel.getAllReviews();
+    res.status(200).json(reviews);
+  } catch (error) {
+    // Manejo de error al intentar leer
+    res.status(500).json({ error: 'Internal server error while retrieving reviews' });
+  }
+};
+
+const getById = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const review = await reviewModel.getReviewById(id);
+    
+    if (!review) {
+      return res.status(404).json({ error: 'Review not found' });
+    }
+    
+    res.status(200).json(review);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error while retrieving the review' });
+  }
+};
+
+const create = async (req, res) => {
+  try {
+    // Ya validado por validateReview middleware
+    const newReview = await reviewModel.createReview(req.body);
+    res.status(201).json(newReview);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error while creating the review' });
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const updatedReview = await reviewModel.updateReview(id, req.body);
+    
+    if (!updatedReview) {
+      return res.status(404).json({ error: 'Review not found to update' });
+    }
+    
+    res.status(200).json(updatedReview);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error while updating the review' });
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const deletedReview = await reviewModel.deleteReview(id);
+    
+    if (!deletedReview) {
+      return res.status(404).json({ error: 'Review not found to delete' });
+    }
+    
+    res.status(200).json(deletedReview);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error while deleting the review' });
+  }
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  remove
+};
+
+
+
+================================================================================
+Nombre del archivo: space.controllers.js
+Ruta: src\controllers\space.controllers.js
+================================================================================
+
+const { getAllSpace, createSpace } = require("../models/space.models");
+
+
+const getSpaces = async (req, res) => {
+    try {
+        const spaces = await getAllSpace();
+        res.status(200).json(spaces);
+    } catch (error) {
+        console.log("Error al obtener los espacios:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const newSpace = async (req, res) =>{
+    
+    const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
+    
+    const disponibilidad = true; // Por defecto, el espacio está disponible al crearlo
+    
+    try {
+        const spaces = await getAllSpace();
+
+    
+        const newId = spaces.length ? Math.max(...spaces.map(elem => elem.id)) + 1 : 1;
+        
+        const newSpace = {
+            id: newId,
+            nombre,
+            descripcion,
+            imagen,
+            capacidad,
+            ubicacion,
+            precio,
+            disponibilidad
+        };
+    
+        const spaceCreated = await createSpace(newSpace);
+    
+        res.status(201).json(spaceCreated);
+        
+    } catch (error) {
+        console.log("Error al crear el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+    
+}
+
+const getSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const space = await getSpaceById(Number(id));
+        if (!space) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        res.status(200).json(space);
+    } catch (error) {
+        console.log("Error al obtener el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const editSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
+        
+        const updatedSpace = await updateSpace(Number(id), {
+            nombre,
+            descripcion,
+            imagen,
+            capacidad,
+            ubicacion,
+            precio
+        });
+        
+        if (!updatedSpace) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        
+        res.status(200).json(updatedSpace);
+    } catch (error) {
+        console.log("Error al actualizar el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+const removeSpace = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await deleteSpace(Number(id));
+        
+        if (!deleted) {
+            return res.status(404).json({ error: "Espacio no encontrado" });
+        }
+        
+        res.status(200).json({ msg: "Espacio eliminado correctamente" });
+    } catch (error) {
+        console.log("Error al eliminar el espacio:", error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+module.exports = {
+    getSpaces,
+    newSpace,
+    getSpace,
+    editSpace,
+    removeSpace
+}
+
+
+================================================================================
+Nombre del archivo: users.controllers.js
+Ruta: src\controllers\users.controllers.js
+================================================================================
+
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { crearNuevoUsuario, encontrarUsuarioPorEmail } = require('../models/users.mongoose');
+
+
+const registrar = async (req, res, next) => {
+
+    try {
+        const { nombre, email, password } = req.body;
+
+        // validación 
+
+        // consulta al modelo para crear el documento en la base de datos
+        const usuario = await crearNuevoUsuario({ nombre, email, password })
+
+        res.status(201).json({
+            msg: "Usuario creado correctamente.",
+            id: usuario._id
+        })
+        
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+// login
+
+const login = async (req, res, next) => {
+
+    try {
+        const { email, password } = req.body;
+
+        // validación 
+
+        // consulta al modelo para validar identidad del usuario
+
+        // verificar el email
+        const usuario = await encontrarUsuarioPorEmail(email);
+
+        if(!usuario) {
+            return res.status(401).json({msg: "Credenciales inválidas."})
+        }
+
+        // validar la contraseña
+        const passwordValidate = await bcrypt.compare(password, usuario.password);
+
+        if(!passwordValidate) {
+            return res.status(401).json({msg: "Credenciales inválidas."})
+        }
+
+        // generamos token de acceso
+
+        const token = jwt.sign({id: usuario._id, email: usuario.email, rol: usuario.rol}, "secret_key_la_generamos_nosotros", {expiresIn: '8h'})
+
+
+        // respuesta al cliente con su información de acceso
+        res.status(200).json({
+            msg: "Login correcto",
+            token: token
+        })
+        
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+module.exports = {
+    registrar,
+    login
+}
+
+
+================================================================================
+Nombre del archivo: mongoose.js
+Ruta: src\database\mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+async  function conectarDB() {
+    try {
+        await mongoose.connect('mongodb+srv://alexignaciorz_db_user:USyXhAv9EsHijpmr@cluster0.6tn0ev4.mongodb.net/');
+        console.log("MongoDB corriendo correctamente"); 
+    } catch (error) {
+        console.error("Error al conectar a MongoDB:", error);
+    }
+}
+
+module.exports = {
+    conectarDB
+}
+
+
+================================================================================
+Nombre del archivo: auth.js
+Ruta: src\middlewares\auth.js
+================================================================================
+
+
+
+
+const jwt = require('jsonwebtoken');
+
+const auth = (req, res, next) => {
+
+    const authHeader = req.headers.authorization;
+
+    // Bearer eyls{adjkfglk{jsdfglkdfgkldfglñj}}
+
+      // verficar que viene un token incluido en la requets
+
+    if(!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({
+            msg: "Token de autenticación requerido"
+        })
+    } 
+
+    // split ---> ["Bearer", "eyjklsdfjklshdfkljhsdf"]
+    const token = authHeader.split(' ')[1];
+
+    // verificar el token
+
+    try {
+        const payload = jwt.verify(token, "secret_key_la_generamos_nosotros");
+
+        // pasar información del usuario al siguiente middleware o controlador
+        req.user = payload;
+        // darle el paso al siguiente middleware
+        next();
+
+    } catch (error) {
+        error.message = "Hubo un error con el token."
+        next(error)
+    }
+};
+
+
+module.exports = auth;
+
+
+================================================================================
+Nombre del archivo: validateReservations.js
+Ruta: src\middlewares\validateReservations.js
+================================================================================
+
+const { getAllSpace } = require("../models/space.models");
+
+const validateReservations = async (req, res, next) => {
+    const { spaceId, date, timeStart, timeEnd } = req.body;
+
+    if( !spaceId || !date || !timeStart || !timeEnd ) {
+        res.status(400).json({
+            msg: "Todos los campos son obligatorios"
+        });
+    }
+
+    const spaces = await getAllSpace();
+    const spaceExists = spaces.some(space => space.id === spaceId);
+
+    if (!spaceExists) {
+        return res.status(404).json({ msg: "El espacio no existe" });
+    }
+    
+    next();
+}
+
+module.exports = validateReservations;
+
+
+================================================================================
+Nombre del archivo: validateReview.js
+Ruta: src\middlewares\validateReview.js
+================================================================================
+
+const validateReview = (req, res, next) => {
+  const { user_id, space_id, calificacion, comentario } = req.body;
+
+  // Verificamos que todos los atributos requeridos existan en el body
+  if (!user_id || !space_id || calificacion === undefined || !comentario) {
+    return res.status(400).json({ error: 'Missing required fields: user_id, space_id, calificacion, and/or comentario' });
+  }
+
+  // Validación estricta para que 'calificacion' sea un número entre 1 y 5
+  if (typeof calificacion !== 'number' || calificacion < 1 || calificacion > 5) {
+    return res.status(400).json({ error: 'calificacion must be a number strictly between 1 and 5' });
+  }
+
+  // Si pasa las validaciones, continuamos al controlador
+  next();
+};
+
+module.exports = {
+  validateReview
+};
+
+
+
+================================================================================
+Nombre del archivo: validateSpace.js
+Ruta: src\middlewares\validateSpace.js
+================================================================================
+
+const validateSpace = async (req, res, next) => {
+    
+    const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
+    
+    // Validar que todos los campos sean obligatorios
+
+    if( !nombre || !descripcion || !imagen || !capacidad || !ubicacion || !precio ) {
+        res.status(400).json({
+            msg: "Todos los campos son oblicatorios"
+        })
+    }
+
+    next();
+
+}
+
+module.exports = validateSpace;
+
+
+================================================================================
+Nombre del archivo: reservations.models.js
+Ruta: src\models\reservations.models.js
+================================================================================
+
+const fs = require("fs/promises");
+const path = require("path");
+
+const reservationsPath = path.join(__dirname, "../../data/reservations.json");
+
+// Leer las Reservations
+const readReservations = async () => {
+    const data = await fs.readFile(reservationsPath, "utf-8");
+    return JSON.parse(data);
+}
+
+// Escribir las Reservations
+const writeReservations = async (reservations) => {
+    await fs.writeFile(reservationsPath, JSON.stringify(reservations, null, 2), "utf-8");
+}
+
+const getAllReservations = async () => {
+    return await readReservations();
+};
+
+const createReservation = async (newReservation) => {
+    const reservations = await readReservations();
+    reservations.push(newReservation);
+    await writeReservations(reservations);
+    return newReservation;
+};
+
+const updateReservation = async () => {
+    
+};
+
+const deleteReservation = async () => {
+    
+};
+
+const getReservationById = async () => {
+    
+};
+
+
+
+module.exports = {
+    getAllReservations,
+    createReservation,
+    updateReservation,
+    deleteReservation,
+    getReservationById
+};
+
+
+================================================================================
+Nombre del archivo: review.models.js
+Ruta: src\models\review.models.js
+================================================================================
+
+const fs = require('fs/promises');
+const path = require('path');
+
+// Ruta absoluta al archivo JSON
+const filePath = path.join(__dirname, '../../data/reviews.json');
+
+// Función DRY para leer las reseñas del archivo
+const readReviews = async () => {
+  try {
+    const data = await fs.readFile(filePath, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    // Si el archivo no existe o está vacío, devolvemos un array vacío como fallback
+    if (error.code === 'ENOENT') {
+      return [];
+    }
+    throw error;
+  }
+};
+
+// Función DRY para escribir las reseñas en el archivo
+const writeReviews = async (reviews) => {
+  try {
+    await fs.writeFile(filePath, JSON.stringify(reviews, null, 2), 'utf-8');
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getAllReviews = async () => {
+  return await readReviews();
+};
+
+const getReviewById = async (id) => {
+  const reviews = await readReviews();
+  return reviews.find(review => review.id === id);
+};
+
+const createReview = async (reviewData) => {
+  const reviews = await readReviews();
+  
+  // Cálculo del nuevo ID a prueba de bugs (incluso si el array está vacío)
+  const id = reviews.length > 0 ? Math.max(...reviews.map(r => r.id)) + 1 : 1;
+  
+  const newReview = { id, ...reviewData };
+  reviews.push(newReview);
+  
+  await writeReviews(reviews);
+  return newReview;
+};
+
+const updateReview = async (id, reviewData) => {
+  const reviews = await readReviews();
+  const index = reviews.findIndex(review => review.id === id);
+  
+  // Si no se encuentra la reseña, retornamos null
+  if (index === -1) return null;
+  
+  // Actualizamos los datos, asegurando que el ID no se sobreescriba
+  reviews[index] = { ...reviews[index], ...reviewData, id };
+  await writeReviews(reviews);
+  
+  return reviews[index];
+};
+
+const deleteReview = async (id) => {
+  const reviews = await readReviews();
+  const index = reviews.findIndex(review => review.id === id);
+  
+  if (index === -1) return null;
+  
+  // Eliminamos el elemento y lo guardamos
+  const deletedReview = reviews.splice(index, 1)[0];
+  await writeReviews(reviews);
+  
+  return deletedReview;
+};
+
+module.exports = {
+  getAllReviews,
+  getReviewById,
+  createReview,
+  updateReview,
+  deleteReview
+};
+
+
+
+================================================================================
+Nombre del archivo: space.models.js
+Ruta: src\models\space.models.js
+================================================================================
+
+const fs = require("fs/promises");
+const path = require("path");
+
+const spacePath = path.join(__dirname, "../../data/space.json");
+
+// Leer Spaces
+const readSpaces = async () => {
+    const data = await fs.readFile(spacePath, "utf-8");
+    return JSON.parse(data);
+};
+
+// Escribir Spaces
+const writeSpaces = async (space) => {
+    await fs.writeFile(spacePath, JSON.stringify(space, null, 2), "utf-8");
+};
+
+const getAllSpace = async () => {
+    return await readSpaces();
+    
+};
+
+const createSpace = async (space) => {
+    const spaces = await readSpaces();
+    spaces.push(space);
+    await writeSpaces(spaces);
+    return space;
+};
+
+const updateSpace = async (id, space) => {
+    const spaces = await readSpaces();
+    const index = spaces.findIndex(s => s.id === id);
+    if (index === -1) return null;
+    spaces[index] = { ...spaces[index], ...space, id };
+    await writeSpaces(spaces);
+    return spaces[index];
+};
+
+const deleteSpace = async (id) => {
+    const spaces = await readSpaces();
+    const filteredSpaces = spaces.filter(s => s.id !== id);
+    await writeSpaces(filteredSpaces);
+    return filteredSpaces.length < spaces.length;
+};
+
+const getSpaceById = async (id) => {
+    const spaces = await readSpaces();
+    return spaces.find(s => s.id === id) || null;
+};
+
+module.exports = {
+    getAllSpace,
+    createSpace,
+    updateSpace,
+    deleteSpace,
+    getSpaceById
+};
+
+
+================================================================================
+Nombre del archivo: users.mongoose.js
+Ruta: src\models\users.mongoose.js
+================================================================================
+
+const bcrypt = require('bcryptjs')
+
+
+ const mongoose = require('mongoose')
+
+
+ const usuarioSchema = new mongoose.Schema({
+    nombre: {type: String, required: true},
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    rol: { type: String, default: 'user' }
+ })
+
+ // middleware pre
+
+ usuarioSchema.pre("save", async function () {
+    if(!this.isModified('password')) return;
+    this.password = await bcrypt.hash(this.password, 10);
+ });
+
+
+ const Usuario = mongoose.model('Usuario', usuarioSchema);
+
+async function crearNuevoUsuario(usuario) {
+
+    const nuevoUsuario = new Usuario(usuario);
+    return await nuevoUsuario.save();
+
+}
+
+async function encontrarUsuarioPorEmail(email) {
+    return await Usuario.findOne({email: email})
+
+}
+
+module.exports = {
+    crearNuevoUsuario,
+    encontrarUsuarioPorEmail
+}
+
+
+================================================================================
+Nombre del archivo: reservations.routes.js
+Ruta: src\routes\reservations.routes.js
+================================================================================
+
+const express = require("express");
+const validateReservations = require("../middlewares/validateReservations");
+const { newReservations, getReservation } = require("../controllers/reservations.controllers");
+const router = express.Router();
+
+router.get("/", getReservation);
+router.post("/", validateReservations, newReservations);
+
+module.exports = router;
+
+
+================================================================================
+Nombre del archivo: review.routes.js
+Ruta: src\routes\review.routes.js
+================================================================================
+
+const express = require('express');
+const router = express.Router();
+const reviewController = require('../controllers/review.controllers');
+const { validateReview } = require('../middlewares/validateReview');
+
+// Rutas de obtención
+router.get('/', reviewController.getAll);
+router.get('/:id', reviewController.getById);
+
+// Rutas de creación/modificación (requieren pasar por el middleware de validación)
+router.post('/', validateReview, reviewController.create);
+router.put('/:id', validateReview, reviewController.update);
+
+// Ruta de eliminación
+router.delete('/:id', reviewController.remove);
+
+module.exports = router;
+
+
+
+================================================================================
+Nombre del archivo: space.routes.js
+Ruta: src\routes\space.routes.js
+================================================================================
+
+const express = require("express");
+const { getSpaces, newSpace, getSpace, editSpace, removeSpace } = require("../controllers/space.controllers");
+const validateSpace = require("../middlewares/validateSpace");
+
+const router = express.Router();
+
+router.get("/", getSpaces);
+router.post("/", validateSpace, newSpace);
+router.get("/:id", getSpace);
+router.put("/:id", validateSpace, editSpace);
+router.delete("/:id", removeSpace);
+
+
+module.exports = router;
+
+
+
+
+================================================================================
+Nombre del archivo: users.router.js
+Ruta: src\routes\users.router.js
+================================================================================
+
+
+
+const express = require('express');
+const { registrar, login } = require('../controllers/users.controllers');
+const auth = require('../middlewares/auth');
+
+const router = express.Router();
+
+
+router.post('/registro', registrar); // crear un nuevo usuario
+router.post('/login', login); // login---
+
+module.exports = router;
+
+
+================================================================================
+Nombre del archivo: server.js
+Ruta: src\server.js
+================================================================================
+
+//Levantar el servidor y conectar a la base de datos
+
+const app = require("./app");
+const { conectarDB } = require("./database/mongoose");  
+
+const PORT = process.env.PORT || 3000;
+
+conectarDB(); // Conectar a la base de datos antes de iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+});
+

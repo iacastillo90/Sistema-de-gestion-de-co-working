@@ -1,0 +1,45 @@
+{
+  "name": "co-working-jaffa",
+  "version": "1.0.0",
+  "description": "El corazón digital de WorkHub. Este backend nace para poner orden al caos, transformando la gestión manual de espacios en una experiencia fluida y sin fricciones para nuestra comunidad de coworking",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iacastillo90/Sistema-de-gestion-de-co-working.git"
+  },
+  "keywords": [
+    "coworking",
+    "gestión-de-reservas",
+    "express",
+    "nodejs",
+    "mern-stack",
+    "api-rest",
+    "workhub",
+    "jaffa",
+    "productividad",
+    "desarrollo-profesional"
+  ],
+  "author": "ColmenaCode",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iacastillo90/Sistema-de-gestion-de-co-working/issues"
+  },
+  "homepage": "https://github.com/iacastillo90/Sistema-de-gestion-de-co-working#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
