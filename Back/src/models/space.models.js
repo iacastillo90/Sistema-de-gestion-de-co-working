@@ -41,6 +41,7 @@ const createSpace = async (space) => {
 };
 
 const updateSpace = async (id, space) => {
+
   const spaces = await readSpaces();
   const index = spaces.findIndex((s) => s.id === id);
   if (index === -1) return null;
@@ -69,3 +70,32 @@ module.exports = {
   getSpaceById,
   Space: mongoose.model("Space", spaceSchema)
 };
+
+    const spaces = await readSpaces();
+    const index = spaces.findIndex(s => s.id === id);
+    if (index === -1) return null;
+    spaces[index] = { ...spaces[index], ...space, id };
+    await writeSpaces(spaces);
+    return spaces[index];
+};
+
+const deleteSpace = async (id) => {
+    const spaces = await readSpaces();
+    const filteredSpaces = spaces.filter(s => s.id !== id);
+    await writeSpaces(filteredSpaces);
+    return filteredSpaces.length < spaces.length;
+};
+
+const getSpaceById = async (id) => {
+    const spaces = await readSpaces();
+    return spaces.find(s => s.id === id) || null;
+};
+
+module.exports = {
+    getAllSpace,
+    createSpace,
+    updateSpace,
+    deleteSpace,
+    getSpaceById
+};
+
