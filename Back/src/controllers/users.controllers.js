@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { crearNuevoUsuario, encontrarUsuarioPorEmail } = require('../models/users.mongoose');
@@ -51,7 +52,8 @@ const login = async (req, res, next) => {
 
         // generamos token de acceso
 
-        const token = jwt.sign({id: usuario._id, email: usuario.email, rol: usuario.rol}, "secret_key_la_generamos_nosotros", {expiresIn: '8h'})
+        // Firmamos el token usando la clave secreta almacenada en .env
+        const token = jwt.sign({id: usuario._id, email: usuario.email, rol: usuario.rol}, process.env.JWT_SECRET, {expiresIn: '8h'})
 
 
         // respuesta al cliente con su información de acceso

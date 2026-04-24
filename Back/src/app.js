@@ -1,38 +1,43 @@
-
 const express = require("express");
-const morgan = require("morgan")
+const morgan = require("morgan");
+
+// ─── Middlewares propios ──────────────────────────────────────────────────────
+// auth verifica el token JWT en cada petición a rutas protegidas
+const auth = require("./middlewares/auth");
+
+// ─── Rutas ────────────────────────────────────────────────────────────────────
+// Rutas públicas (no requieren token)
+const userRoutes = require("./routes/users.routes");
+
+// Rutas protegidas (requieren token JWT válido)
 const spaceRoutes = require("./routes/space.routes");
 const reservationsRoutes = require("./routes/reservations.routes");
 const reviewRoutes = require("./routes/review.routes");
-const userRoutes = require("./routes/users.router");
-const auth = require("./middlewares/auth");
+const paymentsRoutes = require("./routes/payments.routes");
 const locationRoutes = require("./routes/location.routes");
-
-
-
-
 
 const app = express();
 
-//Middlewares
-app.use(express.json());  // Middlewares Incorporado en Express.js
-app.use(morgan("dev"));   // Middlewares de Terceros
+// ─── Middlewares globales ─────────────────────────────────────────────────────
+app.use(express.json());  // Parsea el body de las peticiones como JSON
+app.use(morgan("dev"));   // Muestra en consola cada petición HTTP recibida
 
-//Rutas de Space
-app.use("/api/spaces", spaceRoutes);
-
-//Rutas de Reservations
-app.use("/api/reservations", reservationsRoutes);
-
-//Rutas de Reviews
-app.use("/api/reviews", reviewRoutes);
-
-//Rutas de Locations
-app.use("/api/locations", locationRoutes);
-
-
-//Rutas de Gestion de usuario
+// ─── Rutas públicas ───────────────────────────────────────────────────────────
+// Registro y login no requieren autenticación
 app.use("/api/users", userRoutes);
+
+// ─── Rutas protegidas ─────────────────────────────────────────────────────────
+// Todas las rutas siguientes pasan primero por el middleware `auth`.
+// Internamente, cada router aplica también su propio middleware de validación
+// (validateSpace, validateReservation, validateReview, validatePayment).
+app.use("/api/spaces",       auth, spaceRoutes);
+app.use("/api/reservations", auth, reservationsRoutes);
+app.use("/api/reviews",      auth, reviewRoutes);
+app.use("/api/payments",     auth, paymentsRoutes);
+app.use("/api/locations",    auth, locationRoutes);
+
+// ─── Manejador global de errores ──────────────────────────────────────────────
+// Debe ir siempre al final, después de todas las rutas
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).json({ message: "Error Interno del Servidor" });

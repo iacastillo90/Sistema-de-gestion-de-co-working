@@ -5,9 +5,9 @@ const validateSpace = async (req, res, next) => {
     // Validar que todos los campos sean obligatorios
 
     if( !nombre || !descripcion || !imagen || !capacidad || !ubicacion || !precio ) {
-        res.status(400).json({
-            msg: "Todos los campos son oblicatorios"
-        })
+        return res.status(400).json({
+            msg: "Todos los campos son obligatorios"
+        });
     }
 
     next();
