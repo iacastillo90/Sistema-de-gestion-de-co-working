@@ -8,7 +8,7 @@ const userRoutes = require("./routes/users.router");
 const auth = require("./middlewares/auth");
 const locationRoutes = require("./routes/location.routes");
 
-app.use("/api/locations", locationRoutes);
+
 
 
 
@@ -26,6 +26,9 @@ app.use("/api/reservations", reservationsRoutes);
 
 //Rutas de Reviews
 app.use("/api/reviews", reviewRoutes);
+
+//Rutas de Locations
+app.use("/api/locations", locationRoutes);
 
 
 //Rutas de Gestion de usuario
