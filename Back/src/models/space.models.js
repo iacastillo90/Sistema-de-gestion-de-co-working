@@ -1,73 +1,78 @@
 const fs = require("fs/promises");
 const path = require("path");
+const mongoose = require("mongoose");
+ 
+const spaceSchema = new mongoose.Schema({
+  location_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Location",
+    required: true
+  },
+  type: String,
+  capacity: Number,
+  pricePerHour: Number,
+  imageUrl: String
+});
+ 
+
 
 const spacePath = path.join(__dirname, "../../data/space.json");
 
 // Leer Spaces
 const readSpaces = async () => {
-    const data = await fs.readFile(spacePath, "utf-8");
-    return JSON.parse(data);
+  const data = await fs.readFile(spacePath, "utf-8");
+  return JSON.parse(data);
 };
 
 // Escribir Spaces
 const writeSpaces = async (space) => {
-    await fs.writeFile(spacePath, JSON.stringify(space, null, 2), "utf-8");
+  await fs.writeFile(spacePath, JSON.stringify(space, null, 2), "utf-8");
 };
 
 const getAllSpace = async () => {
-    return await readSpaces();
-    
+  return await readSpaces();
 };
 
 const createSpace = async (space) => {
-    const spaces = await readSpaces();
-    spaces.push(space);
-    await writeSpaces(spaces);
-    return space;
+  const spaces = await readSpaces();
+  spaces.push(space);
+  await writeSpaces(spaces);
+  return space;
 };
 
-<<<<<<< HEAD
 const updateSpace = async (id, space) => {
-    const spaces = await readSpaces();
-    const index = spaces.findIndex(s => s.id === id);
-    if (index === -1) return null;
-    spaces[index] = { ...spaces[index], ...space, id };
-    await writeSpaces(spaces);
-    return spaces[index];
+  const spaces = await readSpaces();
+  const index = spaces.findIndex((s) => s.id === id);
+  if (index === -1) return null;
+  spaces[index] = { ...spaces[index], ...space, id };
+  await writeSpaces(spaces);
+  return spaces[index];
 };
 
 const deleteSpace = async (id) => {
-    const spaces = await readSpaces();
-    const filteredSpaces = spaces.filter(s => s.id !== id);
-    await writeSpaces(filteredSpaces);
-    return filteredSpaces.length < spaces.length;
+  const spaces = await readSpaces();
+  const filteredSpaces = spaces.filter((s) => s.id !== id);
+  await writeSpaces(filteredSpaces);
+  return filteredSpaces.length < spaces.length;
 };
 
 const getSpaceById = async (id) => {
-    const spaces = await readSpaces();
-    return spaces.find(s => s.id === id) || null;
-=======
-const updateSpace = async (space) => {
-    
-};
+  const spaces = await readSpaces();
+  return spaces.find((s) => s.id === id) || null;
 
-const deleteSpace = async (space) => {
-    
-};
+  const updateSpace = async (space) => {};
 
-const getSpaceById = async (space) => {
-    
->>>>>>> origin/migracionAlex
-};
+  const deleteSpace = async (space) => {};
 
-module.exports = {
+  const getSpaceById = async (space) => {};
+
+  module.exports = {
     getAllSpace,
     createSpace,
     updateSpace,
     deleteSpace,
-    getSpaceById
-<<<<<<< HEAD
-};
-=======
+    getSpaceById,
+    mongoose.model("Space", spaceSchema)
+  };
+
 }
->>>>>>> origin/migracionAlex
