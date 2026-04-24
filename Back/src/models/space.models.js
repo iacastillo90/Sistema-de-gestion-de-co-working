@@ -59,20 +59,13 @@ const deleteSpace = async (id) => {
 const getSpaceById = async (id) => {
   const spaces = await readSpaces();
   return spaces.find((s) => s.id === id) || null;
+};
 
-  const updateSpace = async (space) => {};
-
-  const deleteSpace = async (space) => {};
-
-  const getSpaceById = async (space) => {};
-
-  module.exports = {
-    getAllSpace,
-    createSpace,
-    updateSpace,
-    deleteSpace,
-    getSpaceById,
-    mongoose.model("Space", spaceSchema)
-  };
-
-}
+module.exports = {
+  getAllSpace,
+  createSpace,
+  updateSpace,
+  deleteSpace,
+  getSpaceById,
+  Space: mongoose.model("Space", spaceSchema)
+};
