@@ -1,8 +1,4 @@
-
-const { getAllSpace, createSpace, updateSpace, deleteSpace, getSpaceById } = require("../models/space.models");
-
-const { getAllSpace, createSpace } = require("../models/space.models");
-
+const { getAllSpace, createSpace, getSpaceById, updateSpace, deleteSpace } = require("../models/space.models");
 
 
 const getSpaces = async (req, res) => {

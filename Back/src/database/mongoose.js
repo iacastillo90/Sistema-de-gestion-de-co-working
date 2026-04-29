@@ -1,8 +1,10 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-async  function conectarDB() {
+async function conectarDB() {
     try {
-        await mongoose.connect('mongodb+srv://alexignaciorz_db_user:USyXhAv9EsHijpmr@cluster0.6tn0ev4.mongodb.net/');
+        // La URI de conexión se lee desde la variable de entorno MONGODB_URI definida en .env
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log("MongoDB corriendo correctamente"); 
     } catch (error) {
         console.error("Error al conectar a MongoDB:", error);

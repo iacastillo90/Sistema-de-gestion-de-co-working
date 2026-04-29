@@ -23,7 +23,8 @@ const auth = (req, res, next) => {
     // verificar el token
 
     try {
-        const payload = jwt.verify(token, "secret_key_la_generamos_nosotros");
+        // Verificamos el token usando la clave secreta almacenada en .env
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
 
         // pasar información del usuario al siguiente middleware o controlador
         req.user = payload;
