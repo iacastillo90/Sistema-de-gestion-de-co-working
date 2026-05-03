@@ -1,91 +1,6 @@
 TRANSCRIPCIÓN DEL PROYECTO (CARPETA BACK)
-
-
-================================================================================
-Nombre del archivo: reservations.json
-Ruta: data\reservations.json
-================================================================================
-
-[
-    
-]
-
-
-================================================================================
-Nombre del archivo: reviews.json
-Ruta: data\reviews.json
-================================================================================
-
-[]
-
-
-
-================================================================================
-Nombre del archivo: space.json
-Ruta: data\space.json
-================================================================================
-
-[
-  {
-    "id": 1,
-    "nombre": "Flex",
-    "descripcion": "Espacio de trabajo flexible con acceso 24/7, ideal para freelancers y startups.",
-    "imagen": "https://www.primoprint.com/blog/wp-content/uploads/2018/11/everything-about-a-coworking-space.jpg",
-    "capacidad": 50,
-    "ubicacion": "Sala 1",
-    "precio": 30000,
-    "disponibilidad": true
-  },
-  {
-    "id": 2,
-    "nombre": "Hot Desk",
-    "descripcion": "Área común con escritorios compartidos, perfecta para quienes buscan un ambiente dinámico.",
-    "imagen": "https://blog.comunal.co/hubfs/todas%20las%20oficinas%20que%20encuentras%20en%20un%20coworking.png",
-    "capacidad": 30,
-    "ubicacion": "Sala 2",
-    "precio": 20000,
-    "disponibilidad": true
-  },
-  {
-    "id": 3,
-    "nombre": "Full Time",
-    "descripcion": "¡Tu espacio, siempre tuyo! Un puesto de trabajo dedicado en nuestra comunidad.",
-    "imagen": "https://ivoryarquitectura.com/wp-content/uploads/2019/06/Diseno-oficinas-coworking.webp",
-    "capacidad": 60,
-    "ubicacion": "Sala 3",
-    "precio": 40000,
-    "disponibilidad": true
-  },
-  {
-    "id": 4,
-    "nombre": "Sala de Innovación",
-    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
-    "imagen": "http://img.workhub.com/sala1.jpg",
-    "capacidad": 30,
-    "ubicacion": "Santiago, Centro",
-    "precio": 30000,
-    "disponibilidad": true
-  },
-  {
-    "id": 5,
-    "nombre": "Sala de Innovación",
-    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
-    "imagen": "http://img.workhub.com/sala1.jpg",
-    "capacidad": 30,
-    "ubicacion": "Santiago, Centro",
-    "precio": 30000,
-    "disponibilidad": true
-  },
-  {
-    "id": 6,
-    "nombre": "Sala de Innovación",
-    "descripcion": "Espacio amplio con luz natural y pizarra blanca",
-    "imagen": "http://img.workhub.com/sala1.jpg",
-    "capacidad": 30,
-    "ubicacion": "Santiago, Centro",
-    "disponibilidad": true
-  }
-]
+Generado: 5/2/2026, 11:12:03 PM
+Total de archivos: 37
 
 
 ================================================================================
@@ -128,6 +43,7 @@ Ruta: package.json
   "dependencies": {
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
@@ -143,38 +59,60 @@ Ruta: package.json
 
 ================================================================================
 Nombre del archivo: app.js
-Ruta: src\app.js
+Ruta: src/app.js
 ================================================================================
 
-
 const express = require("express");
-const morgan = require("morgan")
+const morgan = require("morgan");
+const cors = require("cors");
+
+// ─── Middlewares propios ──────────────────────────────────────────────────────
+// auth verifica el token JWT en cada petición a rutas protegidas
+const auth = require("./middlewares/auth");
+
+// ─── Rutas ────────────────────────────────────────────────────────────────────
+// Rutas públicas (no requieren token)
+const userRoutes = require("./routes/users.routes");
+
+// Rutas protegidas (requieren token JWT válido)
 const spaceRoutes = require("./routes/space.routes");
 const reservationsRoutes = require("./routes/reservations.routes");
 const reviewRoutes = require("./routes/review.routes");
-const userRoutes = require("./routes/users.router");
-const auth = require("./middlewares/auth");
-
-
+const paymentsRoutes = require("./routes/payments.routes");
+const locationRoutes = require("./routes/location.routes");
+const cardsRoutes = require("./routes/cards.routes");
+const supportRoutes = require("./routes/support.routes");
+const invoicesRoutes = require("./routes/invoices.routes");
 
 const app = express();
 
-//Middlewares
-app.use(express.json());  // Middlewares Incorporado en Express.js
-app.use(morgan("dev"));   // Middlewares de Terceros
+// ─── Middlewares globales ─────────────────────────────────────────────────────
+app.use(cors());          // Habilita CORS para peticiones del frontend (Vite :5173)
+app.use(express.json());  // Parsea el body de las peticiones como JSON
+app.use(morgan("dev"));   // Muestra en consola cada petición HTTP recibida
 
-//Rutas de Space
-app.use("/api/spaces", spaceRoutes);
-
-//Rutas de Reservations
-app.use("/api/reservations", reservationsRoutes);
-
-//Rutas de Reviews
-app.use("/api/reviews", reviewRoutes);
-
-
-//Rutas de Gestion de usuario
+// ─── Rutas públicas ───────────────────────────────────────────────────────────
+// Registro y login no requieren autenticación
 app.use("/api/users", userRoutes);
+
+// ─── Rutas protegidas ─────────────────────────────────────────────────────────
+// Todas las rutas siguientes pasan primero por el middleware `auth`.
+// Internamente, cada router aplica también su propio middleware de validación
+// (validateSpace, validateReservation, validateReview, validatePayment).
+// ─── Rutas (Protección delegada o pública) ───────────────────────────
+app.use("/api/spaces",       spaceRoutes);
+app.use("/api/locations",    locationRoutes);
+
+// ─── Rutas protegidas (Globales) ──────────────────────────────────────
+app.use("/api/reservations", auth, reservationsRoutes);
+app.use("/api/reviews",      auth, reviewRoutes);
+app.use("/api/payments",     auth, paymentsRoutes);
+app.use("/api/cards",        auth, cardsRoutes);
+app.use("/api/support",      auth, supportRoutes);
+app.use("/api/invoices",     auth, invoicesRoutes);
+
+// ─── Manejador global de errores ──────────────────────────────────────────────
+// Debe ir siempre al final, después de todas las rutas
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).json({ message: "Error Interno del Servidor" });
@@ -184,124 +122,497 @@ module.exports = app;
 
 
 ================================================================================
-Nombre del archivo: reservations.controllers.js
-Ruta: src\controllers\reservations.controllers.js
+Nombre del archivo: cards.controllers.js
+Ruta: src/controllers/cards.controllers.js
 ================================================================================
 
-const { getAllReservations, createReservation } = require("../models/reservations.models")
+const {
+  getCardsByUser,
+  getCardById,
+  createCard,
+  setDefaultCard,
+  deleteCard,
+} = require("../models/card.mongoose");
 
-const getReservation = async (req, res) => {
+// GET /api/cards — tarjetas del usuario autenticado
+const getCards = async (req, res, next) => {
+  try {
+    const cards = await getCardsByUser(req.user.id);
+    res.json(cards);
+  } catch (err) {
+    next(err);
+  }
+};
 
+// POST /api/cards — agregar nueva tarjeta
+const addCard = async (req, res, next) => {
+  try {
+    const { card_holder, last4, brand, exp_month, exp_year } = req.body;
+
+    // Si es la primera tarjeta, se marca como default automáticamente
+    const existing = await getCardsByUser(req.user.id);
+    const is_default = existing.length === 0;
+
+    const card = await createCard({
+      user_id: req.user.id,
+      card_holder,
+      last4,
+      brand,
+      exp_month,
+      exp_year,
+      is_default,
+    });
+    res.status(201).json(card);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PUT /api/cards/:id/default — marcar tarjeta como predeterminada
+const makeDefault = async (req, res, next) => {
+  try {
+    const card = await getCardById(req.params.id);
+    if (!card) return res.status(404).json({ message: "Tarjeta no encontrada" });
+    if (card.user_id !== req.user.id) return res.status(403).json({ message: "Sin permiso" });
+
+    const updated = await setDefaultCard(req.params.id, req.user.id);
+    res.json(updated);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// DELETE /api/cards/:id — eliminar tarjeta
+const removeCard = async (req, res, next) => {
+  try {
+    const card = await getCardById(req.params.id);
+    if (!card) return res.status(404).json({ message: "Tarjeta no encontrada" });
+    if (card.user_id !== req.user.id) return res.status(403).json({ message: "Sin permiso" });
+
+    await deleteCard(req.params.id);
+    res.json({ message: "Tarjeta eliminada" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getCards, addCard, makeDefault, removeCard };
+
+
+
+================================================================================
+Nombre del archivo: invoices.controllers.js
+Ruta: src/controllers/invoices.controllers.js
+================================================================================
+
+const {
+  getAllInvoices,
+  getInvoicesByUser,
+  getInvoiceById,
+  createInvoice,
+} = require("../models/invoice.mongoose");
+
+// GET /api/invoices
+const getInvoices = async (req, res, next) => {
+  try {
+    const invoices = req.user.rol === "admin"
+      ? await getAllInvoices()
+      : await getInvoicesByUser(req.user.id);
+    res.json(invoices);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /api/invoices/:id
+const getSingleInvoice = async (req, res, next) => {
+  try {
+    const invoice = await getInvoiceById(req.params.id);
+    if (!invoice) return res.status(404).json({ message: "Factura no encontrada" });
+    
+    // Solo admin o el dueño pueden ver
+    if (req.user.rol !== "admin" && invoice.user_id !== req.user.id) {
+      return res.status(403).json({ message: "Sin acceso a esta factura" });
+    }
+    
+    res.json(invoice);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST /api/invoices
+const addInvoice = async (req, res, next) => {
+  try {
+    const {
+      reservation_id,
+      payment_id,
+      descripcion,
+      cantidad_horas,
+      precio_por_hora,
+      monto_total,
+    } = req.body;
+
+    const invoice = await createInvoice({
+      user_id: req.user.id,
+      reservation_id,
+      payment_id,
+      descripcion,
+      cantidad_horas: Number(cantidad_horas),
+      precio_por_hora: Number(precio_por_hora),
+      monto_total: Number(monto_total),
+    });
+
+    res.status(201).json(invoice);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getInvoices, getSingleInvoice, addInvoice };
+
+
+
+================================================================================
+Nombre del archivo: location.controllers.js
+Ruta: src/controllers/location.controllers.js
+================================================================================
+
+const Location = require("../models/location.mongoose");
+
+// Crear
+const createLocation = async (req, res) => {
+  try {
+    const location = new Location(req.body);
+    const saved = await location.save();
+    res.status(201).json(saved);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Obtener todas
+const getLocations = async (req, res) => {
+  try {
+    const locations = await Location.find();
+    res.json(locations);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Obtener por ID
+const getLocationById = async (req, res) => {
+  try {
+    const location = await Location.findById(req.params.id);
+    if (!location) return res.status(404).json({ msg: "No encontrada" });
+    res.json(location);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Actualizar
+const updateLocation = async (req, res) => {
+  try {
+    const updated = await Location.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Eliminar
+const deleteLocation = async (req, res) => {
+  try {
+    await Location.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Eliminada" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createLocation,
+  getLocations,
+  getLocationById,
+  updateLocation,
+  deleteLocation
+};
+
+
+================================================================================
+Nombre del archivo: payments.controllers.js
+Ruta: src/controllers/payments.controllers.js
+================================================================================
+
+const {
+  getAllPayments,
+  getPaymentById,
+  createPayment,
+  updatePayment,
+  deletePayment,
+} = require('../models/payment.mongoose');
+
+// ─── GET /api/payments ────────────────────────────────────────────────────────
+const getAllPaymentsController = async (req, res, next) => {
+  try {
+    const payments = await getAllPayments();
+    res.status(200).json(payments);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── GET /api/payments/:id ────────────────────────────────────────────────────
+const getPaymentByIdController = async (req, res, next) => {
+  try {
+    const payment = await getPaymentById(req.params.id);
+
+    if (!payment) {
+      return res.status(404).json({ message: `Pago no encontrado.` });
+    }
+
+    res.status(200).json(payment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── POST /api/payments ───────────────────────────────────────────────────────
+const createPaymentController = async (req, res, next) => {
+  try {
+    const newPayment = await createPayment(req.body);
+    res.status(201).json(newPayment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── PUT /api/payments/:id ────────────────────────────────────────────────────
+const updatePaymentController = async (req, res, next) => {
+  try {
+    const updatedPayment = await updatePayment(req.params.id, req.body);
+
+    if (!updatedPayment) {
+      return res.status(404).json({ message: `Pago no encontrado.` });
+    }
+
+    res.status(200).json(updatedPayment);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── DELETE /api/payments/:id ─────────────────────────────────────────────────
+const deletePaymentController = async (req, res, next) => {
+  try {
+    const deletedPayment = await deletePayment(req.params.id);
+
+    if (!deletedPayment) {
+      return res.status(404).json({ message: `Pago no encontrado.` });
+    }
+
+    res.status(200).json({
+      message: `Pago eliminado correctamente.`,
+      payment: deletedPayment,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getAllPaymentsController,
+  getPaymentByIdController,
+  createPaymentController,
+  updatePaymentController,
+  deletePaymentController,
+};
+
+
+
+================================================================================
+Nombre del archivo: reservations.controllers.js
+Ruta: src/controllers/reservations.controllers.js
+================================================================================
+
+const {
+    getAllReservations,
+    getReservationById,
+    createReservation,
+    updateReservation,
+    deleteReservation
+} = require('../models/reservation.mongoose');
+
+// Obtiene todas las reservas
+const getAllReservationsController = async (req, res) => {
     try {
         const reservations = await getAllReservations();
         res.status(200).json(reservations);
     } catch (error) {
-        console.log("Error al obtener las reservas:", error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: "Error al obtener las reservas", error: error.message });
     }
-}
+};
 
-const newReservations = async (req, res) => {
-    
-    const { spaceId, date, timeStart, timeEnd } = req.body;
-    
-
+// Obtiene una reserva por su ID
+const getReservationByIdController = async (req, res) => {
     try {
-        const newId = reservations.length ? Math.max(...reservations.map(elem => elem.id)) + 1 : 1;
-        
-        const newReservation = {
-            id: newId,
-            spaceId,
-            date,
-            timeStart,
-            timeEnd
-        };
-        const reservationCreated = await createReservation(newReservation);
-        
+        const reservation = await getReservationById(req.params.id);
+
+        if (!reservation) {
+            return res.status(404).json({ message: "Reserva no encontrada" });
+        }
+
+        res.status(200).json(reservation);
     } catch (error) {
-        
-        console.log("Error al crear la reserva:", error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ message: "Error al obtener la reserva", error: error.message });
     }
+};
 
+// Crea una nueva reserva
+const createReservationController = async (req, res) => {
+    try {
+        const { space_id, fecha, hora_inicio, hora_fin } = req.body;
+        
+        // Validación de superposición (Double Booking)
+        const existingReservations = await require('../models/reservation.mongoose').getAllReservations();
+        const overlapping = existingReservations.filter(r => {
+            if (r.space_id !== space_id || r.fecha !== fecha || r.estado === 'Cancelada') return false;
+            
+            const rStart = new Date(`1970-01-01T${r.hora_inicio}`);
+            const rEnd = new Date(`1970-01-01T${r.hora_fin}`);
+            const newStart = new Date(`1970-01-01T${hora_inicio}`);
+            const newEnd = new Date(`1970-01-01T${hora_fin}`);
+            
+            // Si el inicio de la nueva es antes del fin de la existente, Y el fin de la nueva es después del inicio de la existente
+            return (newStart < rEnd && newEnd > rStart);
+        });
 
-}
+        if (overlapping.length > 0) {
+            return res.status(400).json({ message: "El espacio ya está ocupado en este horario. Intenta con otro horario u otro espacio." });
+        }
+
+        const created = await createReservation(req.body);
+        res.status(201).json(created);
+    } catch (error) {
+        res.status(500).json({ message: "Error al crear la reserva", error: error.message });
+    }
+};
+
+// Actualiza una reserva existente
+const updateReservationController = async (req, res) => {
+    try {
+        const updatedReservation = await updateReservation(req.params.id, req.body);
+
+        if (!updatedReservation) {
+            return res.status(404).json({ message: "Reserva no encontrada para actualizar" });
+        }
+
+        res.status(200).json(updatedReservation);
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar la reserva", error: error.message });
+    }
+};
+
+// Elimina una reserva
+const deleteReservationController = async (req, res) => {
+    try {
+        const deleted = await deleteReservation(req.params.id);
+
+        if (!deleted) {
+            return res.status(404).json({ message: "Reserva no encontrada para eliminar" });
+        }
+
+        res.status(200).json({ message: "Reserva eliminada con éxito" });
+    } catch (error) {
+        res.status(500).json({ message: "Error al eliminar la reserva", error: error.message });
+    }
+};
 
 module.exports = {
-    getReservation,
-    newReservations
-}
+    getAllReservations: getAllReservationsController,
+    getReservationById: getReservationByIdController,
+    createReservation: createReservationController,
+    updateReservation: updateReservationController,
+    deleteReservation: deleteReservationController
+};
 
 
 ================================================================================
 Nombre del archivo: review.controllers.js
-Ruta: src\controllers\review.controllers.js
+Ruta: src/controllers/review.controllers.js
 ================================================================================
 
-const reviewModel = require('../models/review.models');
+const {
+  getAllReviews,
+  getReviewById,
+  createReview,
+  updateReview,
+  deleteReview
+} = require('../models/review.mongoose');
 
 const getAll = async (req, res) => {
   try {
-    const reviews = await reviewModel.getAllReviews();
+    const reviews = await getAllReviews();
     res.status(200).json(reviews);
   } catch (error) {
-    // Manejo de error al intentar leer
-    res.status(500).json({ error: 'Internal server error while retrieving reviews' });
+    res.status(500).json({ error: 'Error interno al obtener las reseñas' });
   }
 };
 
 const getById = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const review = await reviewModel.getReviewById(id);
-    
+    const review = await getReviewById(req.params.id);
+
     if (!review) {
-      return res.status(404).json({ error: 'Review not found' });
+      return res.status(404).json({ error: 'Reseña no encontrada' });
     }
-    
+
     res.status(200).json(review);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error while retrieving the review' });
+    res.status(500).json({ error: 'Error interno al obtener la reseña' });
   }
 };
 
 const create = async (req, res) => {
   try {
-    // Ya validado por validateReview middleware
-    const newReview = await reviewModel.createReview(req.body);
+    const newReview = await createReview(req.body);
     res.status(201).json(newReview);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error while creating the review' });
+    res.status(500).json({ error: 'Error interno al crear la reseña' });
   }
 };
 
 const update = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const updatedReview = await reviewModel.updateReview(id, req.body);
-    
+    const updatedReview = await updateReview(req.params.id, req.body);
+
     if (!updatedReview) {
-      return res.status(404).json({ error: 'Review not found to update' });
+      return res.status(404).json({ error: 'Reseña no encontrada para actualizar' });
     }
-    
+
     res.status(200).json(updatedReview);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error while updating the review' });
+    res.status(500).json({ error: 'Error interno al actualizar la reseña' });
   }
 };
 
 const remove = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const deletedReview = await reviewModel.deleteReview(id);
-    
+    const deletedReview = await deleteReview(req.params.id);
+
     if (!deletedReview) {
-      return res.status(404).json({ error: 'Review not found to delete' });
+      return res.status(404).json({ error: 'Reseña no encontrada para eliminar' });
     }
-    
+
     res.status(200).json(deletedReview);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error while deleting the review' });
+    res.status(500).json({ error: 'Error interno al eliminar la reseña' });
   }
 };
 
@@ -317,15 +628,15 @@ module.exports = {
 
 ================================================================================
 Nombre del archivo: space.controllers.js
-Ruta: src\controllers\space.controllers.js
+Ruta: src/controllers/space.controllers.js
 ================================================================================
 
-const { getAllSpace, createSpace } = require("../models/space.models");
+const { getAllSpaces, createSpace, getSpaceById, updateSpace, deleteSpace } = require("../models/space.mongoose");
 
 
 const getSpaces = async (req, res) => {
     try {
-        const spaces = await getAllSpace();
+        const spaces = await getAllSpaces();
         res.status(200).json(spaces);
     } catch (error) {
         console.log("Error al obtener los espacios:", error);
@@ -333,44 +644,32 @@ const getSpaces = async (req, res) => {
     }
 }
 
-const newSpace = async (req, res) =>{
-    
-    const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
-    
-    const disponibilidad = true; // Por defecto, el espacio está disponible al crearlo
-    
-    try {
-        const spaces = await getAllSpace();
+const newSpace = async (req, res) => {
+    const { nombre, descripcion, imagen, capacidad, ubicacion, location_id, precio } = req.body;
 
-    
-        const newId = spaces.length ? Math.max(...spaces.map(elem => elem.id)) + 1 : 1;
-        
-        const newSpace = {
-            id: newId,
+    try {
+        const spaceCreated = await createSpace({
             nombre,
             descripcion,
             imagen,
             capacidad,
             ubicacion,
+            location_id,
             precio,
-            disponibilidad
-        };
-    
-        const spaceCreated = await createSpace(newSpace);
-    
+            disponibilidad: true
+        });
+
         res.status(201).json(spaceCreated);
-        
     } catch (error) {
         console.log("Error al crear el espacio:", error);
         res.status(500).json({ error: error.message });
     }
-    
 }
 
 const getSpace = async (req, res) => {
     try {
         const { id } = req.params;
-        const space = await getSpaceById(Number(id));
+        const space = await getSpaceById(id);
         if (!space) {
             return res.status(404).json({ error: "Espacio no encontrado" });
         }
@@ -384,21 +683,23 @@ const getSpace = async (req, res) => {
 const editSpace = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre, descripcion, imagen, capacidad, ubicacion, precio } = req.body;
-        
-        const updatedSpace = await updateSpace(Number(id), {
+        const { nombre, descripcion, imagen, capacidad, ubicacion, location_id, precio, disponibilidad } = req.body;
+
+        const updatedSpace = await updateSpace(id, {
             nombre,
             descripcion,
             imagen,
             capacidad,
             ubicacion,
-            precio
+            location_id,
+            precio,
+            disponibilidad
         });
-        
+
         if (!updatedSpace) {
             return res.status(404).json({ error: "Espacio no encontrado" });
         }
-        
+
         res.status(200).json(updatedSpace);
     } catch (error) {
         console.log("Error al actualizar el espacio:", error);
@@ -409,12 +710,12 @@ const editSpace = async (req, res) => {
 const removeSpace = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = await deleteSpace(Number(id));
-        
+        const deleted = await deleteSpace(id);
+
         if (!deleted) {
             return res.status(404).json({ error: "Espacio no encontrado" });
         }
-        
+
         res.status(200).json({ msg: "Espacio eliminado correctamente" });
     } catch (error) {
         console.log("Error al eliminar el espacio:", error);
@@ -432,10 +733,105 @@ module.exports = {
 
 
 ================================================================================
-Nombre del archivo: users.controllers.js
-Ruta: src\controllers\users.controllers.js
+Nombre del archivo: support.controllers.js
+Ruta: src/controllers/support.controllers.js
 ================================================================================
 
+const {
+  getAllTickets,
+  getTicketsByUser,
+  createTicket,
+  updateTicketStatus,
+  getTicketById,
+  updateTicket,
+} = require("../models/support.mongoose");
+
+// GET /api/support — admin ve todos, usuario ve los suyos
+const getTickets = async (req, res, next) => {
+  try {
+    const tickets = req.user.rol === "admin"
+      ? await getAllTickets()
+      : await getTicketsByUser(req.user.id);
+    res.json(tickets);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /api/support/:id — obtener ticket por ID
+const getTicketByIdController = async (req, res, next) => {
+  try {
+    const ticket = await getTicketById(req.params.id);
+    if (!ticket) return res.status(404).json({ message: "Ticket no encontrado" });
+    // Solo el dueño o admin puede verlo
+    if (req.user.rol !== "admin" && ticket.user_id !== req.user.id) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    res.json(ticket);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST /api/support — crear ticket
+const createSupportTicket = async (req, res, next) => {
+  try {
+    const { subject, description, related_payment_id, related_reservation_id } = req.body;
+    const ticket = await createTicket({
+      user_id: req.user.id,
+      subject,
+      description,
+      related_payment_id: related_payment_id || null,
+      related_reservation_id: related_reservation_id || null,
+    });
+    res.status(201).json(ticket);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PUT /api/support/:id/status — solo admin puede cambiar estado
+const changeStatus = async (req, res, next) => {
+  try {
+    if (req.user.rol !== "admin") {
+      return res.status(403).json({ message: "Solo admins pueden cambiar el estado" });
+    }
+    const { status } = req.body;
+    const ticket = await updateTicketStatus(req.params.id, status);
+    if (!ticket) return res.status(404).json({ message: "Ticket no encontrado" });
+    res.json(ticket);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PUT /api/support/:id/respond — admin responde al ticket
+const respondTicket = async (req, res, next) => {
+  try {
+    if (req.user.rol !== "admin") {
+      return res.status(403).json({ message: "Solo admins pueden responder tickets" });
+    }
+    const { admin_response, status } = req.body;
+    const updateData = { admin_response };
+    if (status) updateData.status = status;
+    const ticket = await updateTicket(req.params.id, updateData);
+    if (!ticket) return res.status(404).json({ message: "Ticket no encontrado" });
+    res.json(ticket);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getTickets, getTicketByIdController, createSupportTicket, changeStatus, respondTicket };
+
+
+
+================================================================================
+Nombre del archivo: users.controllers.js
+Ruta: src/controllers/users.controllers.js
+================================================================================
+
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { crearNuevoUsuario, encontrarUsuarioPorEmail } = require('../models/users.mongoose');
@@ -489,7 +885,8 @@ const login = async (req, res, next) => {
 
         // generamos token de acceso
 
-        const token = jwt.sign({id: usuario._id, email: usuario.email, rol: usuario.rol}, "secret_key_la_generamos_nosotros", {expiresIn: '8h'})
+        // Firmamos el token usando la clave secreta almacenada en .env
+        const token = jwt.sign({id: usuario._id, email: usuario.email, nombre: usuario.nombre, rol: usuario.rol}, process.env.JWT_SECRET, {expiresIn: '8h'})
 
 
         // respuesta al cliente con su información de acceso
@@ -504,22 +901,68 @@ const login = async (req, res, next) => {
 
 }
 
+const getUsers = async (req, res, next) => {
+    try {
+        if (req.user.rol !== 'admin') {
+            return res.status(403).json({ msg: "Acceso denegado" });
+        }
+        const users = await require('../models/users.mongoose').getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const getPublicUser = async (req, res, next) => {
+    try {
+        const user = await require('../models/users.mongoose').getUserById(req.params.id);
+        if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' });
+        res.status(200).json(user);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const updateUser = async (req, res, next) => {
+    try {
+        // Un usuario solo puede editarse a sí mismo (a menos que sea admin, pero dejémoslo simple)
+        if (req.user.id !== req.params.id && req.user.rol !== 'admin') {
+            return res.status(403).json({ msg: "No autorizado para editar este perfil" });
+        }
+        const updated = await require('../models/users.mongoose').updateUser(req.params.id, req.body);
+        if (!updated) return res.status(404).json({ msg: 'Usuario no encontrado' });
+        
+        // Return a fresh token so the frontend can update authUser in localStorage
+        const jwt = require('jsonwebtoken');
+        const token = jwt.sign({id: updated._id, email: updated.email, nombre: updated.nombre, rol: updated.rol}, process.env.JWT_SECRET, {expiresIn: '8h'});
+
+        res.status(200).json({ user: updated, token });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     registrar,
-    login
+    login,
+    getUsers,
+    getPublicUser,
+    updateUser
 }
 
 
 ================================================================================
 Nombre del archivo: mongoose.js
-Ruta: src\database\mongoose.js
+Ruta: src/database/mongoose.js
 ================================================================================
 
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-async  function conectarDB() {
+async function conectarDB() {
     try {
-        await mongoose.connect('mongodb+srv://alexignaciorz_db_user:USyXhAv9EsHijpmr@cluster0.6tn0ev4.mongodb.net/');
+        // La URI de conexión se lee desde la variable de entorno MONGODB_URI definida en .env
+        await mongoose.connect(process.env.MONGODB_URI);
         console.log("MongoDB corriendo correctamente"); 
     } catch (error) {
         console.error("Error al conectar a MongoDB:", error);
@@ -533,7 +976,7 @@ module.exports = {
 
 ================================================================================
 Nombre del archivo: auth.js
-Ruta: src\middlewares\auth.js
+Ruta: src/middlewares/auth.js
 ================================================================================
 
 
@@ -561,7 +1004,8 @@ const auth = (req, res, next) => {
     // verificar el token
 
     try {
-        const payload = jwt.verify(token, "secret_key_la_generamos_nosotros");
+        // Verificamos el token usando la clave secreta almacenada en .env
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
 
         // pasar información del usuario al siguiente middleware o controlador
         req.user = payload;
@@ -579,41 +1023,144 @@ module.exports = auth;
 
 
 ================================================================================
-Nombre del archivo: validateReservations.js
-Ruta: src\middlewares\validateReservations.js
+Nombre del archivo: validateCard.js
+Ruta: src/middlewares/validateCard.js
 ================================================================================
 
-const { getAllSpace } = require("../models/space.models");
+const CURRENT_YEAR = new Date().getFullYear();
+const BRANDS = ["Visa", "Mastercard", "Amex"];
 
-const validateReservations = async (req, res, next) => {
-    const { spaceId, date, timeStart, timeEnd } = req.body;
+function validateCard(req, res, next) {
+  const { card_holder, last4, brand, exp_month, exp_year } = req.body;
+  const errors = [];
 
-    if( !spaceId || !date || !timeStart || !timeEnd ) {
-        res.status(400).json({
-            msg: "Todos los campos son obligatorios"
+  if (!card_holder || typeof card_holder !== "string" || card_holder.trim().length < 2) {
+    errors.push("card_holder: nombre del titular inválido (mínimo 2 caracteres)");
+  }
+
+  if (!last4 || !/^\d{4}$/.test(last4)) {
+    errors.push("last4: debe contener exactamente 4 dígitos numéricos");
+  }
+
+  if (!brand || !BRANDS.includes(brand)) {
+    errors.push(`brand: debe ser uno de ${BRANDS.join(", ")}`);
+  }
+
+  const month = Number(exp_month);
+  if (!exp_month || isNaN(month) || month < 1 || month > 12) {
+    errors.push("exp_month: mes de expiración inválido (1-12)");
+  }
+
+  const year = Number(exp_year);
+  if (!exp_year || isNaN(year) || year < CURRENT_YEAR || year > CURRENT_YEAR + 20) {
+    errors.push(`exp_year: año de expiración inválido (${CURRENT_YEAR}-${CURRENT_YEAR + 20})`);
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({ message: "Datos de tarjeta inválidos", errors });
+  }
+
+  next();
+}
+
+module.exports = validateCard;
+
+
+
+================================================================================
+Nombre del archivo: validatePayment.js
+Ruta: src/middlewares/validatePayment.js
+================================================================================
+
+// Lista de estados válidos según el dominio de negocio
+const VALID_STATES = ['Pendiente', 'En Revisión', 'Completado'];
+
+/**
+ * Middleware que valida el body de una petición de pago.
+ * Verifica presencia de campos obligatorios, tipos de datos y valores permitidos.
+ */
+const validatePayment = (req, res, next) => {
+  const { reservation_id, monto, metodo_pago, fecha_pago, estado } = req.body;
+
+  // Verificamos que todos los campos obligatorios estén presentes en el body
+  if (
+    reservation_id === undefined ||
+    monto === undefined ||
+    !metodo_pago ||
+    !fecha_pago ||
+    !estado
+  ) {
+    return res.status(400).json({
+      message:
+        'Todos los campos son obligatorios: reservation_id, monto, metodo_pago, fecha_pago, estado.',
+    });
+  }
+
+  // El monto debe ser un número mayor a 0 para que sea un pago válido
+  if (typeof monto !== 'number' || monto <= 0) {
+    return res.status(400).json({
+      message: 'El campo "monto" debe ser un número mayor a 0.',
+    });
+  }
+
+  // El estado solo puede ser uno de los valores definidos en VALID_STATES
+  if (!VALID_STATES.includes(estado)) {
+    return res.status(400).json({
+      message: `El campo "estado" debe ser uno de los siguientes valores: ${VALID_STATES.join(', ')}.`,
+    });
+  }
+
+  // Si todas las validaciones pasan, continuamos con el siguiente middleware o controlador
+  next();
+};
+
+module.exports = validatePayment;
+
+
+
+================================================================================
+Nombre del archivo: validateReservation.js
+Ruta: src/middlewares/validateReservation.js
+================================================================================
+
+const validateReservation = (req, res, next) => {
+    const { user_id, space_id, fecha, hora_inicio, hora_fin, estado } = req.body;
+
+    // Verifica que todos los campos requeridos estén presentes en el body
+    if (!user_id || !space_id || !fecha || !hora_inicio || !hora_fin || !estado) {
+        return res.status(400).json({
+            message: "Faltan datos requeridos. Debe proveer user_id, space_id, fecha, hora_inicio, hora_fin y estado."
         });
     }
 
-    const spaces = await getAllSpace();
-    const spaceExists = spaces.some(space => space.id === spaceId);
-
-    if (!spaceExists) {
-        return res.status(404).json({ msg: "El espacio no existe" });
+    // Verifica que el estado sea estrictamente uno de los valores permitidos
+    if (estado !== "Confirmada" && estado !== "Cancelada") {
+        return res.status(400).json({
+            message: "El campo 'estado' debe ser estrictamente 'Confirmada' o 'Cancelada'."
+        });
     }
-    
-    next();
-}
 
-module.exports = validateReservations;
+    // Si la validación es exitosa, pasa el control al siguiente middleware/controlador
+    next();
+};
+
+module.exports = validateReservation;
+
 
 
 ================================================================================
 Nombre del archivo: validateReview.js
-Ruta: src\middlewares\validateReview.js
+Ruta: src/middlewares/validateReview.js
 ================================================================================
 
 const validateReview = (req, res, next) => {
-  const { user_id, space_id, calificacion, comentario } = req.body;
+  const { user_id, space_id, calificacion, comentario, respuesta_admin } = req.body;
+
+  // Si es una actualización de solo la respuesta admin, dejar pasar sin validaciones de creación
+  const isAdminResponse = respuesta_admin !== undefined && !user_id && !space_id && !comentario;
+  if (isAdminResponse) {
+    return next();
+  }
 
   // Verificamos que todos los atributos requeridos existan en el body
   if (!user_id || !space_id || calificacion === undefined || !comentario) {
@@ -637,7 +1184,7 @@ module.exports = {
 
 ================================================================================
 Nombre del archivo: validateSpace.js
-Ruta: src\middlewares\validateSpace.js
+Ruta: src/middlewares/validateSpace.js
 ================================================================================
 
 const validateSpace = async (req, res, next) => {
@@ -647,9 +1194,9 @@ const validateSpace = async (req, res, next) => {
     // Validar que todos los campos sean obligatorios
 
     if( !nombre || !descripcion || !imagen || !capacidad || !ubicacion || !precio ) {
-        res.status(400).json({
-            msg: "Todos los campos son oblicatorios"
-        })
+        return res.status(400).json({
+            msg: "Todos los campos son obligatorios"
+        });
     }
 
     next();
@@ -660,141 +1207,344 @@ module.exports = validateSpace;
 
 
 ================================================================================
-Nombre del archivo: reservations.models.js
-Ruta: src\models\reservations.models.js
+Nombre del archivo: card.mongoose.js
+Ruta: src/models/card.mongoose.js
 ================================================================================
 
-const fs = require("fs/promises");
-const path = require("path");
+const mongoose = require("mongoose");
 
-const reservationsPath = path.join(__dirname, "../../data/reservations.json");
+const cardSchema = new mongoose.Schema({
+  user_id: {
+    type: String,
+    required: true,
+    index: true,
+  },
+  card_holder: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  last4: {
+    type: String,
+    required: true,
+    minlength: 4,
+    maxlength: 4,
+    match: /^\d{4}$/,
+  },
+  brand: {
+    type: String,
+    required: true,
+    enum: ["Visa", "Mastercard", "Amex"],
+  },
+  exp_month: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 12,
+  },
+  exp_year: {
+    type: Number,
+    required: true,
+    min: new Date().getFullYear(),
+  },
+  is_default: {
+    type: Boolean,
+    default: false,
+  },
+}, {
+  timestamps: true,
+});
 
-// Leer las Reservations
-const readReservations = async () => {
-    const data = await fs.readFile(reservationsPath, "utf-8");
-    return JSON.parse(data);
-}
+const Card = mongoose.model("Card", cardSchema);
 
-// Escribir las Reservations
-const writeReservations = async (reservations) => {
-    await fs.writeFile(reservationsPath, JSON.stringify(reservations, null, 2), "utf-8");
-}
-
-const getAllReservations = async () => {
-    return await readReservations();
+const getCardsByUser = async (userId) => {
+  return await Card.find({ user_id: userId }).sort({ is_default: -1, createdAt: -1 });
 };
 
-const createReservation = async (newReservation) => {
-    const reservations = await readReservations();
-    reservations.push(newReservation);
-    await writeReservations(reservations);
-    return newReservation;
+const getCardById = async (id) => {
+  return await Card.findById(id);
 };
 
-const updateReservation = async () => {
-    
+const createCard = async (data) => {
+  const card = new Card(data);
+  return await card.save();
 };
 
-const deleteReservation = async () => {
-    
+const setDefaultCard = async (cardId, userId) => {
+  // Quitar el default de todas las tarjetas del usuario
+  await Card.updateMany({ user_id: userId }, { is_default: false });
+  // Poner el default en la tarjeta seleccionada
+  return await Card.findByIdAndUpdate(cardId, { is_default: true }, { new: true });
 };
 
-const getReservationById = async () => {
-    
+const deleteCard = async (id) => {
+  return await Card.findByIdAndDelete(id);
 };
-
-
 
 module.exports = {
-    getAllReservations,
-    createReservation,
-    updateReservation,
-    deleteReservation,
-    getReservationById
+  getCardsByUser,
+  getCardById,
+  createCard,
+  setDefaultCard,
+  deleteCard,
 };
+
 
 
 ================================================================================
-Nombre del archivo: review.models.js
-Ruta: src\models\review.models.js
+Nombre del archivo: invoice.mongoose.js
+Ruta: src/models/invoice.mongoose.js
 ================================================================================
 
-const fs = require('fs/promises');
-const path = require('path');
+const mongoose = require("mongoose");
 
-// Ruta absoluta al archivo JSON
-const filePath = path.join(__dirname, '../../data/reviews.json');
+const invoiceSchema = new mongoose.Schema({
+  user_id: { type: String, required: true, index: true },
+  reservation_id: { type: String, required: true },
+  payment_id: { type: String, required: true },
+  descripcion: { type: String, required: true },
+  cantidad_horas: { type: Number, required: true },
+  precio_por_hora: { type: Number, required: true },
+  monto_total: { type: Number, required: true },
+  estado: {
+    type: String,
+    enum: ["Emitida", "Anulada"],
+    default: "Emitida",
+  },
+}, {
+  timestamps: true,
+});
 
-// Función DRY para leer las reseñas del archivo
-const readReviews = async () => {
-  try {
-    const data = await fs.readFile(filePath, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    // Si el archivo no existe o está vacío, devolvemos un array vacío como fallback
-    if (error.code === 'ENOENT') {
-      return [];
-    }
-    throw error;
-  }
+const Invoice = mongoose.model("Invoice", invoiceSchema);
+
+const getInvoicesByUser = async (userId) => {
+  return await Invoice.find({ user_id: userId }).sort({ createdAt: -1 });
 };
 
-// Función DRY para escribir las reseñas en el archivo
-const writeReviews = async (reviews) => {
-  try {
-    await fs.writeFile(filePath, JSON.stringify(reviews, null, 2), 'utf-8');
-  } catch (error) {
-    throw error;
-  }
+const getAllInvoices = async () => {
+  return await Invoice.find().sort({ createdAt: -1 });
 };
+
+const getInvoiceById = async (id) => {
+  return await Invoice.findById(id);
+};
+
+const createInvoice = async (data) => {
+  const invoice = new Invoice(data);
+  return await invoice.save();
+};
+
+module.exports = {
+  getInvoicesByUser,
+  getAllInvoices,
+  getInvoiceById,
+  createInvoice,
+};
+
+
+
+================================================================================
+Nombre del archivo: location.mongoose.js
+Ruta: src/models/location.mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+const locationSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
+  },
+  imagen: {
+    type: String,
+    default: null
+  },
+  descripcion: {
+    type: String,
+    default: null
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model("Location", locationSchema);
+
+
+================================================================================
+Nombre del archivo: payment.mongoose.js
+Ruta: src/models/payment.mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+const paymentSchema = new mongoose.Schema({
+  reservation_id: { type: String, required: true },
+  monto:          { type: Number, required: true },
+  metodo_pago:    { type: String, required: true },
+  fecha_pago:     { type: String, required: true },
+  estado: {
+    type: String,
+    required: true,
+    enum: ["Pendiente", "En Revisión", "Completado"],
+    default: "Pendiente",
+  },
+  // ID de la tarjeta Card usada para pagar (opcional, null si fue otro método)
+  card_id: { type: String, default: null },
+}, {
+  timestamps: true,
+});
+
+const Payment = mongoose.model("Payment", paymentSchema);
+
+const getAllPayments = async () => {
+  return await Payment.find();
+};
+
+const getPaymentById = async (id) => {
+  return await Payment.findById(id);
+};
+
+const createPayment = async (data) => {
+  const payment = new Payment(data);
+  return await payment.save();
+};
+
+const updatePayment = async (id, data) => {
+  return await Payment.findByIdAndUpdate(id, data, { new: true });
+};
+
+const deletePayment = async (id) => {
+  return await Payment.findByIdAndDelete(id);
+};
+
+module.exports = {
+  getAllPayments,
+  getPaymentById,
+  createPayment,
+  updatePayment,
+  deletePayment
+};
+
+
+
+================================================================================
+Nombre del archivo: reservation.mongoose.js
+Ruta: src/models/reservation.mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+const reservationSchema = new mongoose.Schema({
+  user_id: { type: String, required: true },
+  space_id: { type: String, required: true },
+  fecha: { type: String, required: true },
+  hora_inicio: { type: String, required: true },
+  hora_fin: { type: String, required: true },
+  nota: { type: String }, // Opcional, para indicar el motivo de la reserva
+  estado: {
+    type: String,
+    required: true,
+    enum: ["Confirmada", "Cancelada", "Pendiente"],
+    default: "Confirmada"
+  }
+}, {
+  timestamps: true
+});
+
+const Reservation = mongoose.model("Reservation", reservationSchema);
+
+const getAllReservations = async () => {
+  return await Reservation.find();
+};
+
+const getReservationById = async (id) => {
+  return await Reservation.findById(id);
+};
+
+const createReservation = async (data) => {
+  const reservation = new Reservation(data);
+  return await reservation.save();
+};
+
+const updateReservation = async (id, data) => {
+  return await Reservation.findByIdAndUpdate(id, data, { new: true });
+};
+
+const deleteReservation = async (id) => {
+  return await Reservation.findByIdAndDelete(id);
+};
+
+module.exports = {
+  getAllReservations,
+  getReservationById,
+  createReservation,
+  updateReservation,
+  deleteReservation
+};
+
+
+
+================================================================================
+Nombre del archivo: review.mongoose.js
+Ruta: src/models/review.mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+const reviewSchema = new mongoose.Schema({
+  user_id: { type: String, required: true },
+  space_id: { type: String, required: true },
+  calificacion: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5
+  },
+  comentario: { type: String, required: true },
+  // Respuesta administrativa opcional
+  respuesta_admin: { type: String, default: null },
+  fecha_respuesta: { type: String, default: null }
+}, {
+  timestamps: true
+});
+
+const Review = mongoose.model("Review", reviewSchema);
 
 const getAllReviews = async () => {
-  return await readReviews();
+  return await Review.find();
 };
 
 const getReviewById = async (id) => {
-  const reviews = await readReviews();
-  return reviews.find(review => review.id === id);
+  return await Review.findById(id);
 };
 
-const createReview = async (reviewData) => {
-  const reviews = await readReviews();
-  
-  // Cálculo del nuevo ID a prueba de bugs (incluso si el array está vacío)
-  const id = reviews.length > 0 ? Math.max(...reviews.map(r => r.id)) + 1 : 1;
-  
-  const newReview = { id, ...reviewData };
-  reviews.push(newReview);
-  
-  await writeReviews(reviews);
-  return newReview;
+const createReview = async (data) => {
+  const review = new Review(data);
+  return await review.save();
 };
 
-const updateReview = async (id, reviewData) => {
-  const reviews = await readReviews();
-  const index = reviews.findIndex(review => review.id === id);
-  
-  // Si no se encuentra la reseña, retornamos null
-  if (index === -1) return null;
-  
-  // Actualizamos los datos, asegurando que el ID no se sobreescriba
-  reviews[index] = { ...reviews[index], ...reviewData, id };
-  await writeReviews(reviews);
-  
-  return reviews[index];
+const updateReview = async (id, data) => {
+  return await Review.findByIdAndUpdate(id, data, { new: true });
 };
 
 const deleteReview = async (id) => {
-  const reviews = await readReviews();
-  const index = reviews.findIndex(review => review.id === id);
-  
-  if (index === -1) return null;
-  
-  // Eliminamos el elemento y lo guardamos
-  const deletedReview = reviews.splice(index, 1)[0];
-  await writeReviews(reviews);
-  
-  return deletedReview;
+  return await Review.findByIdAndDelete(id);
 };
 
 module.exports = {
@@ -808,71 +1558,149 @@ module.exports = {
 
 
 ================================================================================
-Nombre del archivo: space.models.js
-Ruta: src\models\space.models.js
+Nombre del archivo: space.mongoose.js
+Ruta: src/models/space.mongoose.js
 ================================================================================
 
-const fs = require("fs/promises");
-const path = require("path");
+const mongoose = require("mongoose");
 
-const spacePath = path.join(__dirname, "../../data/space.json");
+const spaceSchema = new mongoose.Schema({
+  nombre: { type: String, required: true, trim: true },
+  descripcion: { type: String, required: true },
+  imagen: { type: String },
+  capacidad: { type: Number, required: true },
+  ubicacion: { type: String }, // Mantenido por compatibilidad
+  location_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
+  precio: { type: Number, required: true },
+  disponibilidad: { type: Boolean, default: true }
+}, {
+  timestamps: true
+});
 
-// Leer Spaces
-const readSpaces = async () => {
-    const data = await fs.readFile(spacePath, "utf-8");
-    return JSON.parse(data);
-};
+const Space = mongoose.model("Space", spaceSchema);
 
-// Escribir Spaces
-const writeSpaces = async (space) => {
-    await fs.writeFile(spacePath, JSON.stringify(space, null, 2), "utf-8");
-};
-
-const getAllSpace = async () => {
-    return await readSpaces();
-    
-};
-
-const createSpace = async (space) => {
-    const spaces = await readSpaces();
-    spaces.push(space);
-    await writeSpaces(spaces);
-    return space;
-};
-
-const updateSpace = async (id, space) => {
-    const spaces = await readSpaces();
-    const index = spaces.findIndex(s => s.id === id);
-    if (index === -1) return null;
-    spaces[index] = { ...spaces[index], ...space, id };
-    await writeSpaces(spaces);
-    return spaces[index];
-};
-
-const deleteSpace = async (id) => {
-    const spaces = await readSpaces();
-    const filteredSpaces = spaces.filter(s => s.id !== id);
-    await writeSpaces(filteredSpaces);
-    return filteredSpaces.length < spaces.length;
+const getAllSpaces = async () => {
+  return await Space.find().populate('location_id');
 };
 
 const getSpaceById = async (id) => {
-    const spaces = await readSpaces();
-    return spaces.find(s => s.id === id) || null;
+  return await Space.findById(id).populate('location_id');
+};
+
+const createSpace = async (spaceData) => {
+  const space = new Space(spaceData);
+  return await space.save();
+};
+
+const updateSpace = async (id, spaceData) => {
+  return await Space.findByIdAndUpdate(id, spaceData, { new: true });
+};
+
+const deleteSpace = async (id) => {
+  return await Space.findByIdAndDelete(id);
 };
 
 module.exports = {
-    getAllSpace,
-    createSpace,
-    updateSpace,
-    deleteSpace,
-    getSpaceById
+  getAllSpaces,
+  getSpaceById,
+  createSpace,
+  updateSpace,
+  deleteSpace
 };
+
+
+
+================================================================================
+Nombre del archivo: support.mongoose.js
+Ruta: src/models/support.mongoose.js
+================================================================================
+
+const mongoose = require("mongoose");
+
+const supportSchema = new mongoose.Schema({
+  user_id: {
+    type: String,
+    required: true,
+    index: true,
+  },
+  subject: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 120,
+  },
+  description: {
+    type: String,
+    required: true,
+    trim: true,
+    maxlength: 1000,
+  },
+  related_payment_id: {
+    type: String,
+    default: null,
+  },
+  related_reservation_id: {
+    type: String,
+    default: null,
+  },
+  admin_response: {
+    type: String,
+    default: null,
+    trim: true,
+    maxlength: 2000,
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ["Open", "In Review", "Resolved"],
+    default: "Open",
+  },
+}, {
+  timestamps: true,
+});
+
+const SupportTicket = mongoose.model("SupportTicket", supportSchema);
+
+const getAllTickets = async () => {
+  return await SupportTicket.find().sort({ createdAt: -1 });
+};
+
+const getTicketsByUser = async (userId) => {
+  return await SupportTicket.find({ user_id: userId }).sort({ createdAt: -1 });
+};
+
+const getTicketById = async (id) => {
+  return await SupportTicket.findById(id);
+};
+
+const createTicket = async (data) => {
+  const ticket = new SupportTicket(data);
+  return await ticket.save();
+};
+
+const updateTicketStatus = async (id, status) => {
+  return await SupportTicket.findByIdAndUpdate(id, { status }, { new: true });
+};
+
+const updateTicket = async (id, data) => {
+  return await SupportTicket.findByIdAndUpdate(id, data, { new: true });
+};
+
+module.exports = {
+  getAllTickets,
+  getTicketsByUser,
+  getTicketById,
+  createTicket,
+  updateTicketStatus,
+  updateTicket,
+};
+
+
 
 
 ================================================================================
 Nombre del archivo: users.mongoose.js
-Ruta: src\models\users.mongoose.js
+Ruta: src/models/users.mongoose.js
 ================================================================================
 
 const bcrypt = require('bcryptjs')
@@ -910,31 +1738,180 @@ async function encontrarUsuarioPorEmail(email) {
 
 }
 
+async function getAllUsers() {
+    return await Usuario.find().select('-password'); // no devolvemos contraseñas
+}
+
+async function getUserById(id) {
+    return await Usuario.findById(id).select('nombre email rol'); // solo campos públicos
+}
+
+async function updateUser(id, data) {
+    if (data.password) {
+        data.password = await bcrypt.hash(data.password, 10);
+    }
+    return await Usuario.findByIdAndUpdate(id, data, { new: true }).select('nombre email rol');
+}
+
 module.exports = {
     crearNuevoUsuario,
-    encontrarUsuarioPorEmail
+    encontrarUsuarioPorEmail,
+    getAllUsers,
+    getUserById,
+    updateUser
 }
 
 
 ================================================================================
-Nombre del archivo: reservations.routes.js
-Ruta: src\routes\reservations.routes.js
+Nombre del archivo: cards.routes.js
+Ruta: src/routes/cards.routes.js
 ================================================================================
 
 const express = require("express");
-const validateReservations = require("../middlewares/validateReservations");
-const { newReservations, getReservation } = require("../controllers/reservations.controllers");
+const router = express.Router();
+const { getCards, addCard, makeDefault, removeCard } = require("../controllers/cards.controllers");
+const validateCard = require("../middlewares/validateCard");
+
+// GET /api/cards
+router.get("/", getCards);
+
+// POST /api/cards
+router.post("/", validateCard, addCard);
+
+// PUT /api/cards/:id/default
+router.put("/:id/default", makeDefault);
+
+// DELETE /api/cards/:id
+router.delete("/:id", removeCard);
+
+module.exports = router;
+
+
+
+================================================================================
+Nombre del archivo: invoices.routes.js
+Ruta: src/routes/invoices.routes.js
+================================================================================
+
+const express = require("express");
+const router = express.Router();
+const { getInvoices, getSingleInvoice, addInvoice } = require("../controllers/invoices.controllers");
+
+// GET /api/invoices
+router.get("/", getInvoices);
+
+// GET /api/invoices/:id
+router.get("/:id", getSingleInvoice);
+
+// POST /api/invoices
+router.post("/", addInvoice);
+
+module.exports = router;
+
+
+
+================================================================================
+Nombre del archivo: location.routes.js
+Ruta: src/routes/location.routes.js
+================================================================================
+
+const express = require("express");
 const router = express.Router();
 
-router.get("/", getReservation);
-router.post("/", validateReservations, newReservations);
+const {
+  createLocation,
+  getLocations,
+  getLocationById,
+  updateLocation,
+  deleteLocation
+} = require("../controllers/location.controllers");
+const auth = require("../middlewares/auth");
+
+router.post("/", auth, createLocation);
+router.get("/", getLocations);
+router.get("/:id", getLocationById);
+router.put("/:id", auth, updateLocation);
+router.delete("/:id", auth, deleteLocation);
 
 module.exports = router;
 
 
 ================================================================================
+Nombre del archivo: payments.routes.js
+Ruta: src/routes/payments.routes.js
+================================================================================
+
+const { Router } = require('express');
+
+// Importamos los controladores y el middleware de validación
+const {
+  getAllPaymentsController,
+  getPaymentByIdController,
+  createPaymentController,
+  updatePaymentController,
+  deletePaymentController,
+} = require('../controllers/payments.controllers');
+
+const validatePayment = require('../middlewares/validatePayment');
+
+const router = Router();
+
+// ─── Definición de rutas ──────────────────────────────────────────────────────
+
+// Obtener todos los pagos
+router.get('/', getAllPaymentsController);
+
+// Obtener un pago específico por su ID
+router.get('/:id', getPaymentByIdController);
+
+// Crear un nuevo pago (el middleware valida el body antes de llegar al controlador)
+router.post('/', validatePayment, createPaymentController);
+
+// Actualizar un pago existente (también requiere validación del body)
+router.put('/:id', validatePayment, updatePaymentController);
+
+// Eliminar un pago por su ID
+router.delete('/:id', deletePaymentController);
+
+module.exports = router;
+
+
+
+================================================================================
+Nombre del archivo: reservations.routes.js
+Ruta: src/routes/reservations.routes.js
+================================================================================
+
+const express = require('express');
+const router = express.Router();
+
+// Importa el controlador y el middleware
+const reservationsController = require('../controllers/reservations.controllers');
+const validateReservation = require('../middlewares/validateReservation');
+
+// Define las rutas para el CRUD de Reservations
+// GET /api/reservations/
+router.get('/', reservationsController.getAllReservations);
+
+// GET /api/reservations/:id
+router.get('/:id', reservationsController.getReservationById);
+
+// POST /api/reservations/ (requiere validación)
+router.post('/', validateReservation, reservationsController.createReservation);
+
+// PUT /api/reservations/:id (requiere validación)
+router.put('/:id', validateReservation, reservationsController.updateReservation);
+
+// DELETE /api/reservations/:id
+router.delete('/:id', reservationsController.deleteReservation);
+
+// Exporta el enrutador
+module.exports = router;
+
+
+================================================================================
 Nombre del archivo: review.routes.js
-Ruta: src\routes\review.routes.js
+Ruta: src/routes/review.routes.js
 ================================================================================
 
 const express = require('express');
@@ -959,20 +1936,21 @@ module.exports = router;
 
 ================================================================================
 Nombre del archivo: space.routes.js
-Ruta: src\routes\space.routes.js
+Ruta: src/routes/space.routes.js
 ================================================================================
 
 const express = require("express");
 const { getSpaces, newSpace, getSpace, editSpace, removeSpace } = require("../controllers/space.controllers");
+const auth = require("../middlewares/auth");
 const validateSpace = require("../middlewares/validateSpace");
 
 const router = express.Router();
 
 router.get("/", getSpaces);
-router.post("/", validateSpace, newSpace);
+router.post("/", auth, validateSpace, newSpace);
 router.get("/:id", getSpace);
-router.put("/:id", validateSpace, editSpace);
-router.delete("/:id", removeSpace);
+router.put("/:id", auth, validateSpace, editSpace);
+router.delete("/:id", auth, removeSpace);
 
 
 module.exports = router;
@@ -981,28 +1959,56 @@ module.exports = router;
 
 
 ================================================================================
-Nombre del archivo: users.router.js
-Ruta: src\routes\users.router.js
+Nombre del archivo: support.routes.js
+Ruta: src/routes/support.routes.js
 ================================================================================
 
+const express = require("express");
+const router = express.Router();
+const { getTickets, getTicketByIdController, createSupportTicket, changeStatus, respondTicket } = require("../controllers/support.controllers");
 
+// GET /api/support
+router.get("/", getTickets);
+
+// GET /api/support/:id
+router.get("/:id", getTicketByIdController);
+
+// POST /api/support
+router.post("/", createSupportTicket);
+
+// PUT /api/support/:id/status — admin only (validated inside controller)
+router.put("/:id/status", changeStatus);
+
+// PUT /api/support/:id/respond — admin only
+router.put("/:id/respond", respondTicket);
+
+module.exports = router;
+
+
+
+================================================================================
+Nombre del archivo: users.routes.js
+Ruta: src/routes/users.routes.js
+================================================================================
 
 const express = require('express');
-const { registrar, login } = require('../controllers/users.controllers');
+const { registrar, login, getUsers, getPublicUser, updateUser } = require('../controllers/users.controllers');
 const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
-
 router.post('/registro', registrar); // crear un nuevo usuario
-router.post('/login', login); // login---
+router.post('/login', login); // login
+router.get('/', auth, getUsers); // obtener usuarios (solo admin)
+router.get('/:id', auth, getPublicUser); // obtener info pública de un usuario por ID
+router.put('/:id', auth, updateUser); // actualizar perfil de usuario
 
 module.exports = router;
 
 
 ================================================================================
 Nombre del archivo: server.js
-Ruta: src\server.js
+Ruta: src/server.js
 ================================================================================
 
 //Levantar el servidor y conectar a la base de datos
