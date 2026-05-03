@@ -17,12 +17,12 @@ function Hero () {
                         la productividad y colaboración.
                         </p>
                         <div className="hero-buttons d-flex flex-wrap gap-3">
-                            <a href="#registro" className="btn-white btn-arrow-css"
+                            <a href="#registro" className="btn-pill-white btn-arrow-css"
                                 >¡Agenda una visita!</a
                             >
                             <Link
                                 to="/membresias"
-                                className="btn-outline-custom"
+                                className="btn-pill-outline-white"
                             >
                                 Membresías
                             </Link>

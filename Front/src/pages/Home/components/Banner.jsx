@@ -13,7 +13,7 @@ function Banner () {
                 Mientras tú te enfocas en lo importante, nosotros te ayudamos a
                 encontrar el espacio ideal.
                 </p>
-                <a href="#contacto" className="btn-contact">¡Conversemos!</a>
+                <a href="#contacto" className="btn-pill-red">¡Conversemos!</a>
             </div>
         </section>
     );

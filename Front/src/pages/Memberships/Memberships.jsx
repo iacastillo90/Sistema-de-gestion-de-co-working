@@ -1,119 +1,116 @@
-import '../../assets/css/App.css';
+import { useEffect, useState } from 'react';
+import { getSpaces, getLocations } from '../../services/api';
+import './Memberships.css';
+
 import HeroMemberships from './components/HeroMemberships';
-import MembershipsCard from './components/MembreshipCard';
+import SpaceCard from './components/SpaceCard';
+import SpacesFilters from './components/SpacesFilters';
+import MembershipsLoadingSkeleton from './components/MembershipsLoadingSkeleton';
 
 function Memberships() {
-    
-    const membershipData = [
-        {  id: 1,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "OFICINA PRIVADA",
-            capacity: "3 - 8",
-            features: [
-                "Acceso: 24/7",
-                "Sala de reuniones: 20 h",
-                "Wifi, café e impresoras"
-            ],
-            titleBack: "Privacidad Total",
-            descriptionBack: "Espacios cerrados y amoblados diseñados para equipos que requieren confidencialidad."
-        },
-        {   id: 2,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "HOT DESK",
-            capacity: "30",
-            features: [
-                "Acceso: Ilimitado",
-                "Sala de reuniones: 10 h",
-                "Comunidad Co-Work"
-            ],
-            titleBack: "Flexibilidad Pura",
-            descriptionBack: "Ideal para freelancers que buscan un lugar inspirador sin puestos fijos."
-        },
-        {   id: 3,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "DEDICATED DESK",
-            capacity: "1",
-            features: [
-                "Acceso: 24/7",
-                "Sala de reuniones: 15 h",
-                "Locker personal"
-            ],
-            titleBack: "Dedicado Total",
-            descriptionBack: "Tu espacio fijo dentro de un ambiente colaborativo, con acceso exclusivo."
-        },
-        {   id: 4,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "SALA DE REUNIONES",
-            capacity: "N/A",
-            features: [
-                "Acceso: 24/7",
-                "Sala de reuniones: 10 h",
-                "Equipos de videoconferencia"
-            ],
-            titleBack: "Reuniones Profesionales",
-            descriptionBack: "Espacios diseñados para facilitar reuniones efectivas con tecnología de vanguardia."
+  const [spaces, setSpaces] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [activeFilter, setActiveFilter] = useState('');
 
-        },
-        {   id: 5,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "EVENTOS Y WORKSHOPS",
-            capacity: "N/A",
-            features: [
-                "Acceso: Según evento",
-                "Sala de reuniones: Según evento",
-                "Catering y soporte técnico"
-            ],
-            titleBack: "Espacios para Crecer",
-            descriptionBack: "Salas versátiles para eventos, capacitaciones y networking con servicios personalizados."
-        },
-        {   id: 6,
-            imgOffice: "./assets/img/jpg/oficina-privada.jpg",
-            title: "OFICINA VIRTUAL",
-            capacity: "N/A",
-            features: [
-                "Acceso: 24/7",
-                "Sala de reuniones: 10 h",
-                "Equipos de videoconferencia"
-            ],
-            titleBack: "Trabajo Remoto Eficiente",
-            descriptionBack: "Espacios diseñados para facilitar el trabajo remoto con acceso a todas las herramientas necesarias."
-        }
-    ];
+  useEffect(() => {
+    async function load() {
+      try {
+        const [spacesData, locationsData] = await Promise.all([
+          getSpaces(),
+          getLocations().catch(() => []),
+        ]);
+        setSpaces(spacesData);
+        setLocations(locationsData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
 
-    return(
-        <>
-            <HeroMemberships />
+  // Helper: resolve location object for a space
+  function getLocation(space) {
+    const locId = typeof space.location_id === 'object'
+      ? space.location_id?._id
+      : space.location_id;
+    return locations.find(l => l._id === locId) || null;
+  }
 
-            <section id="planes" className="py-5 bg-light">
-                <div className="container">
-                    <div className="text-center mb-5">
-                        <h2 className="display-5 fw-bold">
-                            Nuestros <span className="text-danger">Planes</span>
-                        </h2>
-                        <p className="text-secondary">
-                            Encuentra el espacio ideal para tu crecimiento profesional.
-                        </p>
-                    </div>
+  // Apply tipo filter
+  const filteredSpaces = activeFilter
+    ? spaces.filter(s => s.tipo?.toLowerCase() === activeFilter)
+    : spaces;
 
-                    <div className="row g-4">
+  // Stats for hero
+  const availableCount = spaces.filter(s => s.disponibilidad).length;
 
-                        {membershipData.map((membership) => (
-                            <MembershipsCard
-                                key={membership.id}
-                                imgOffice={membership.imgOffice}
-                                title={membership.title}
-                                capacity={membership.capacity}
-                                features={membership.features} 
-                                titleBack={membership.titleBack}
-                                descriptionBack={membership.descriptionBack}
-                            />
-                        ))}
+  return (
+    <>
+      <HeroMemberships
+        totalSpaces={availableCount || spaces.length}
+        totalLocations={locations.length}
+      />
 
-                    </div>
-                </div>
-            </section>
-        </>
-    );
+      <section id="espacios" className="memberships-section">
+        <div className="container">
+
+          {error && (
+            <div className="alert alert-danger d-flex align-items-center gap-2 mb-4">
+              <i className="fas fa-exclamation-circle"></i>
+              <span>{error} — Por favor recarga la página o inicia sesión.</span>
+            </div>
+          )}
+
+          <SpacesFilters
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
+            total={spaces.length}
+            filtered={filteredSpaces.length}
+          />
+
+          <div className="mt-4">
+            {loading ? (
+              <MembershipsLoadingSkeleton />
+            ) : filteredSpaces.length === 0 ? (
+              <div className="memberships-empty">
+                <i className="fas fa-building d-block text-muted"></i>
+                <h4 className="fw-bold mt-3">No hay espacios disponibles</h4>
+                <p className="text-muted">
+                  {activeFilter
+                    ? `No encontramos espacios del tipo "${activeFilter}". Prueba otro filtro.`
+                    : 'Aún no hay espacios registrados en el sistema.'}
+                </p>
+                {activeFilter && (
+                  <button
+                    className="btn btn-outline-danger mt-2"
+                    onClick={() => setActiveFilter('')}
+                    style={{ borderRadius: '10px' }}
+                  >
+                    <i className="fas fa-times me-2"></i>Quitar filtro
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="row g-4">
+                {filteredSpaces.map(space => (
+                  <SpaceCard
+                    key={space._id}
+                    space={space}
+                    location={getLocation(space)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default Memberships;

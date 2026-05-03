@@ -1,7 +1,6 @@
 /* ==========================================================================
     Fer — Html Login
     Sección: #login
-    Para seguir editando: agrega tus reglas debajo de este bloque
 ========================================================================== */
 
 .login-container {
@@ -13,7 +12,6 @@
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -31,10 +29,13 @@
 
 /* Caja login */
 .login-box {
-  background: rgba(255, 255, 255, 0.952);
-  width: 500px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.952));
+  width: 100%;
+  max-width: 480px;
   padding: 40px;
-  border-radius: 20px; 
+  border-radius: var(--radius-xl);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  color: var(--text);
 }
 
 /* Título */
@@ -42,31 +43,35 @@
   margin-bottom: 20px;
   text-align: center;
   font-weight: bold;
-  }
+}
 
 /* Inputs */
-input {
+.login-box input {
+  display: block;
   width: 100%;
   padding: 10px;
   margin: 8px 0 15px 0;
-  border-radius: 8px; 
-  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color, #ccc);
+  background: var(--bg-color, #fff);
+  color: var(--text);
 }
 
 /* Botón */
-button {
+.login-box button {
   width: 100%;
   padding: 12px;
-  background: #dc3545;
+  background: var(--primary-red);
   color: white;
   border: none;
-  border-radius: 8px; 
+  border-radius: var(--radius-sm);
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-button:hover {
-  background-color: #c82333;
+.login-box button:hover {
+  background-color: var(--primary-red-dark);
 }
 
 .signup-title {
@@ -77,9 +82,39 @@ button:hover {
   text-align: center;
 }
 
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .login-box {
+  background: rgba(30, 30, 30, 0.95);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .login-box input {
+  border-color: #444;
+  background: #2a2a2a;
+}
+
+body.dark-mode .login-container {
+  position: relative;
+}
+body.dark-mode .login-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 0;
+}
+body.dark-mode .login-box {
+  position: relative;
+  z-index: 1;
+}
+
 /* Responsive */
-@media (max-width: 600px) {
-  .login-box {
-    width: 100%;
-  }
+@media (max-width: 767px) {
+  .login-container { padding: 80px 1rem 2rem; }
+  .login-box { padding: 2rem 1.5rem; border-radius: var(--radius-lg); }
+}
+@media (max-width: 480px) {
+  .login-box { padding: 1.75rem 1.25rem; }
 }

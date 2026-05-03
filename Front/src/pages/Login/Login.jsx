@@ -1,76 +1,48 @@
-import './Login.css';
 import { useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../../services/api';
+import { storage } from '../../utils/storage';
+import './Login.css';
 
-function Login () {
+import { LoginForm } from './components/LoginForm';
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    const [loginExitoso, setLoginExitoso] = useState(false); 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Intentando iniciar sesión con:", { email, password });
-        
-        setLoginExitoso(true); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const data = await loginUser({ email, password });
+      storage.set("token", data.token);
+      const payload = JSON.parse(atob(data.token.split('.')[1]));
+      storage.set("authUser", payload);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    return (
-        <div className="login-container">
-            <div className="login-box">
-                
-                {loginExitoso ? (
-                    
-                    <div className="success-message text-center">
-                        <h2>¡Bienvenido de vuelta! 🎉</h2>
-                        <p>Has iniciado sesión correctamente con el correo:</p>
-                        <p><strong>{email}</strong></p>
-                        <br />
-                        <Link to="/" className="btn btn-primary">Ir al Panel Principal</Link>
-                    </div>
-
-                ) : (
-
-                    <>
-                        <h2>Iniciar Sesión</h2>
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="email"><strong>Correo Electrónico</strong></label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Ingresa tu correo electrónico"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            /> 
-                            <br /><br />
-
-                            <label htmlFor="password"><strong>Contraseña </strong></label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Ingresa tu contraseña"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            /> 
-                            <br /><br />
-
-                            <p>
-                                ¿Olvidaste tu contraseña?{' '}
-                                <a href="#"><strong>Presiona aquí</strong></a>
-                            </p>
-                            <button type="submit">Entrar</button>
-                        </form>
-                    </>
-                )}
-
-            </div>
-        </div>
-    );
+  return (
+    <div className="login-container">
+      <LoginForm 
+        email={email} 
+        setEmail={setEmail} 
+        password={password} 
+        setPassword={setPassword} 
+        handleSubmit={handleSubmit} 
+        error={error} 
+        loading={loading} 
+      />
+    </div>
+  );
 }
 
 export default Login;
