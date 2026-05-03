@@ -1,0 +1,37 @@
+/* ==========================================================================
+    Reviews — Estilos específicos
+========================================================================== */
+
+/* Stars */
+.star-filled {
+  color: #f59e0b;
+}
+
+.star-empty {
+  color: #e5e7eb;
+}
+
+/* Review Card Hover Lift (Additional safety on top of premium-card) */
+.review-card-interactive {
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+
+.review-card-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* Review image banner */
+.review-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 25%, rgba(0,0,0,0.65));
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .review-card-interactive:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}

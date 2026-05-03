@@ -1,0 +1,55 @@
+/* ==========================================================================
+    Settings — Estilos específicos
+========================================================================== */
+
+/* Profile Header Background */
+.profile-initial-bg {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--primary-red), var(--accent));
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(209, 32, 38, 0.3);
+}
+
+/* Security Icon Badge */
+.security-icon-badge {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(209, 32, 38, 0.1);
+  color: var(--primary-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Info Box */
+.settings-info-box {
+  width: 100%;
+  text-align: left;
+  background-color: var(--surface-2);
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-top: auto;
+  border-left: 4px solid var(--primary-red);
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .settings-info-box {
+  background-color: #2d2d2d !important;
+  color: var(--muted);
+}
+
+@media (max-width: 767px) {
+  .mt-lg-0 { margin-top: 1.25rem !important; }
+}

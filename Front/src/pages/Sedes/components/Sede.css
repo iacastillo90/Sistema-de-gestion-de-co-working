@@ -1,0 +1,517 @@
+/* ==========================================================================
+   Sede.css — Componentes atómicos de páginas de Sede
+   JAFFA CoWork | Importado por SedeHero, SedeInfoCard, etc.
+========================================================================== */
+
+/* ── SedeHero ────────────────────────────────────────────────────────────── */
+.sede-hero {
+  height: 100vh;
+  min-height: 650px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.sede-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+  will-change: transform;
+}
+
+.sede-hero:hover .sede-hero-bg {
+  transform: scale(1.0);
+}
+
+.sede-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 25, 0.82) 0%,
+    rgba(180, 20, 30, 0.45) 100%
+  );
+  z-index: 1;
+}
+
+.sede-hero-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
+
+.sede-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(209, 32, 38, 0.22);
+  border: 1px solid rgba(209, 32, 38, 0.45);
+  color: #ff8a8a;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.sede-hero h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  margin-bottom: 1.25rem;
+  color: #fff;
+}
+
+.sede-hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.sede-stat-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.sede-stat-label {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* ── SedeSection ─────────────────────────────────────────────────────────── */
+.sede-section {
+  padding: 80px 0;
+}
+
+.sede-section-alt {
+  padding: 80px 0;
+  background: var(--surface-2);
+}
+
+.sede-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary-red);
+  margin-bottom: 0.5rem;
+}
+
+.sede-section-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: var(--dark-text);
+  line-height: 1.25;
+}
+
+.sede-section-title span {
+  color: var(--primary-red);
+}
+
+/* ── SedeGallery ─────────────────────────────────────────────────────────── */
+.sede-gallery {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  grid-template-rows: 200px 200px;
+  gap: 10px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.sede-gallery-main {
+  grid-row: 1 / span 2;
+}
+
+.sede-gallery img,
+.sede-gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.sede-gallery img:hover,
+.sede-gallery-main img:hover {
+  transform: scale(1.04);
+}
+
+/* ── SedeFeatureCard ─────────────────────────────────────────────────────── */
+.sede-feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid #ede8ea;
+  border-radius: 14px;
+  background: #fff;
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+  height: 100%;
+}
+
+.sede-feature-card:hover {
+  box-shadow: 0 8px 28px rgba(180, 20, 30, 0.12);
+  transform: translateY(-3px);
+}
+
+.sede-feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(220, 53, 69, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-red);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.sede-feature-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--dark-text);
+}
+
+.sede-feature-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── SedeInfoCard ────────────────────────────────────────────────────────── */
+.sede-info-card {
+  position: sticky;
+  top: 90px;
+  background: linear-gradient(135deg, #1a0f13 0%, #0a0a14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  color: #fff;
+}
+
+.sede-info-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #fff;
+}
+
+.sede-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.sede-info-row:last-of-type {
+  border-bottom: none;
+}
+
+.sede-info-row > i {
+  color: var(--primary-red);
+  font-size: 0.9rem;
+  margin-top: 2px;
+  width: 16px;
+  flex-shrink: 0;
+}
+
+.sede-info-row-label {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.sede-info-row-value {
+  font-size: 0.83rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.45;
+}
+
+/* ── SedeMap ─────────────────────────────────────────────────────────────── */
+.sede-map-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 200px;
+}
+
+.sede-map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── SedeCTA ─────────────────────────────────────────────────────────────── */
+.sede-cta {
+  background: linear-gradient(135deg, #1d0609 0%, #3a0d12 50%, #1a1228 100%);
+  padding: 80px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.sede-cta h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.sede-cta p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+}
+
+.btn-sede-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--primary-red);
+  color: #fff !important;
+  font-weight: 700;
+  padding: 0.8rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background 0.22s ease, transform 0.18s ease;
+  font-size: 0.95rem;
+}
+
+.btn-sede-cta:hover {
+  background: #b02a37;
+  transform: translateY(-2px);
+}
+
+.btn-sede-cta-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #fff !important;
+  font-weight: 700;
+  padding: 0.8rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.22s ease, background 0.22s ease;
+  font-size: 0.95rem;
+}
+
+.btn-sede-cta-outline:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Sala de Reunión Card ─────────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sala-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.sala-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(180, 20, 30, 0.15);
+}
+
+.sala-card-img-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.sala-card-img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.sala-card:hover .sala-card-img {
+  transform: scale(1.1);
+}
+
+/* Shine effect on hover */
+.sala-card-img-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+  z-index: 1;
+}
+
+.sala-card:hover .sala-card-img-wrapper::after {
+  left: 150%;
+}
+
+.sala-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sala-capacity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(209, 32, 38, 0.08);
+  color: var(--primary-red);
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.sala-amenities {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sala-amenities li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.sala-amenities li i {
+  color: #198754;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* ── Dark Mode ───────────────────────────────────────────────────────────── */
+body.dark-mode .sede-section-alt {
+  background: var(--surface-2);
+}
+
+body.dark-mode .sede-section-title {
+  color: var(--title) !important;
+}
+
+body.dark-mode .sede-feature-card {
+  background: var(--bg-card) !important;
+  border-color: var(--line);
+}
+
+body.dark-mode .sede-feature-title {
+  color: var(--title);
+}
+
+body.dark-mode .sede-feature-desc {
+  color: var(--muted);
+}
+
+body.dark-mode .sede-info-card {
+  background: linear-gradient(135deg, #10101f 0%, #0a0a14 100%);
+  border-color: var(--line);
+}
+
+body.dark-mode .text-muted {
+  color: var(--muted) !important;
+}
+
+body.dark-mode .sala-card {
+  background: var(--bg-card) !important;
+  border-color: var(--line);
+}
+
+body.dark-mode .sala-card-body {
+  background: transparent;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .sede-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: 220px 140px 140px;
+    border-radius: var(--radius-lg);
+  }
+
+  .sede-gallery-main { grid-row: 1; }
+  .sede-info-card { position: static; top: auto; padding: 1.5rem 1.25rem; }
+  .sede-hero h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
+  .sede-hero-stats { gap: 1rem; flex-direction: column; }
+  .sede-section { padding: 50px 0; }
+  .sede-section-alt { padding: 50px 0; }
+  
+  /* CTA Buttons full width on mobile */
+  .sede-cta { padding: 50px 0; }
+  .sede-cta .d-flex { flex-direction: column; align-items: stretch; }
+  .btn-sede-cta, .btn-sede-cta-outline { width: 100%; justify-content: center; }
+
+  /* Sala Card adjustments */
+  .sala-card-img-wrapper { height: 180px; }
+  .sala-card-body { padding: 1.25rem; }
+}
+
+@media (min-width: 1024px) {
+  .sala-card-img-wrapper { height: 240px; }
+  .sala-card-body { padding: 1.75rem; }
+  .sala-card h4 { font-size: 1.25rem !important; }
+}
+
+@media (min-width: 1440px) {
+  .sede-hero h1 { font-size: clamp(3rem, 4vw, 4.5rem); }
+  .sala-card-img-wrapper { height: 260px; }
+}
