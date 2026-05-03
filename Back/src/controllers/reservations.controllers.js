@@ -1,9 +1,15 @@
-const reservationModel = require('../models/reservations.models');
+const {
+    getAllReservations,
+    getReservationById,
+    createReservation,
+    updateReservation,
+    deleteReservation
+} = require('../models/reservation.mongoose');
 
 // Obtiene todas las reservas
-const getAllReservations = async (req, res) => {
+const getAllReservationsController = async (req, res) => {
     try {
-        const reservations = await reservationModel.getAllReservations();
+        const reservations = await getAllReservations();
         res.status(200).json(reservations);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener las reservas", error: error.message });
@@ -11,17 +17,14 @@ const getAllReservations = async (req, res) => {
 };
 
 // Obtiene una reserva por su ID
-const getReservationById = async (req, res) => {
+const getReservationByIdController = async (req, res) => {
     try {
-        // Convierte el ID de los parámetros de la ruta (string) a número
-        const id = Number(req.params.id);
-        const reservation = await reservationModel.getReservationById(id);
-        
-        // Si no existe, devuelve un error 404
+        const reservation = await getReservationById(req.params.id);
+
         if (!reservation) {
             return res.status(404).json({ message: "Reserva no encontrada" });
         }
-        
+
         res.status(200).json(reservation);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener la reserva", error: error.message });
@@ -29,22 +32,29 @@ const getReservationById = async (req, res) => {
 };
 
 // Crea una nueva reserva
-const createReservation = async (req, res) => {
+const createReservationController = async (req, res) => {
     try {
-        const reservations = await reservationModel.getAllReservations();
+        const { space_id, fecha, hora_inicio, hora_fin } = req.body;
         
-        // Cálculo del nuevo ID: es a prueba de bugs si el array está vacío
-        const newId = reservations.length > 0 
-            ? Math.max(...reservations.map(r => r.id)) + 1 
-            : 1;
+        // Validación de superposición (Double Booking)
+        const existingReservations = await require('../models/reservation.mongoose').getAllReservations();
+        const overlapping = existingReservations.filter(r => {
+            if (r.space_id !== space_id || r.fecha !== fecha || r.estado === 'Cancelada') return false;
+            
+            const rStart = new Date(`1970-01-01T${r.hora_inicio}`);
+            const rEnd = new Date(`1970-01-01T${r.hora_fin}`);
+            const newStart = new Date(`1970-01-01T${hora_inicio}`);
+            const newEnd = new Date(`1970-01-01T${hora_fin}`);
+            
+            // Si el inicio de la nueva es antes del fin de la existente, Y el fin de la nueva es después del inicio de la existente
+            return (newStart < rEnd && newEnd > rStart);
+        });
 
-        const newReservation = {
-            id: newId,
-            ...req.body
-        };
+        if (overlapping.length > 0) {
+            return res.status(400).json({ message: "El espacio ya está ocupado en este horario. Intenta con otro horario u otro espacio." });
+        }
 
-        const created = await reservationModel.createReservation(newReservation);
-        // Responde con status 201 (Created)
+        const created = await createReservation(req.body);
         res.status(201).json(created);
     } catch (error) {
         res.status(500).json({ message: "Error al crear la reserva", error: error.message });
@@ -52,16 +62,14 @@ const createReservation = async (req, res) => {
 };
 
 // Actualiza una reserva existente
-const updateReservation = async (req, res) => {
+const updateReservationController = async (req, res) => {
     try {
-        const id = Number(req.params.id);
-        const updatedReservation = await reservationModel.updateReservation(id, req.body);
-        
-        // Si la reserva no existe, devuelve 404
+        const updatedReservation = await updateReservation(req.params.id, req.body);
+
         if (!updatedReservation) {
             return res.status(404).json({ message: "Reserva no encontrada para actualizar" });
         }
-        
+
         res.status(200).json(updatedReservation);
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar la reserva", error: error.message });
@@ -69,16 +77,14 @@ const updateReservation = async (req, res) => {
 };
 
 // Elimina una reserva
-const deleteReservation = async (req, res) => {
+const deleteReservationController = async (req, res) => {
     try {
-        const id = Number(req.params.id);
-        const deleted = await reservationModel.deleteReservation(id);
-        
-        // Si no se encontró el ID para borrar, devuelve 404
+        const deleted = await deleteReservation(req.params.id);
+
         if (!deleted) {
             return res.status(404).json({ message: "Reserva no encontrada para eliminar" });
         }
-        
+
         res.status(200).json({ message: "Reserva eliminada con éxito" });
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar la reserva", error: error.message });
@@ -86,9 +92,9 @@ const deleteReservation = async (req, res) => {
 };
 
 module.exports = {
-    getAllReservations,
-    getReservationById,
-    createReservation,
-    updateReservation,
-    deleteReservation
+    getAllReservations: getAllReservationsController,
+    getReservationById: getReservationByIdController,
+    createReservation: createReservationController,
+    updateReservation: updateReservationController,
+    deleteReservation: deleteReservationController
 };

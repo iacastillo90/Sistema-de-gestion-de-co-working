@@ -1,4 +1,4 @@
-const Location = require("../models/location.model");
+const Location = require("../models/location.mongoose");
 
 // Crear
 const createLocation = async (req, res) => {
