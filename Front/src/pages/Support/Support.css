@@ -1,0 +1,73 @@
+/* ==========================================================================
+    Support — Estilos específicos
+========================================================================== */
+
+/* Support Card Interactive */
+.support-card-interactive {
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.support-card-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* Banner gradient */
+.support-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 30%, rgba(0,0,0,0.65));
+}
+
+/* Message Box */
+.support-msg-box {
+  background: var(--surface-2);
+  border-left: 4px solid var(--muted);
+}
+
+.support-admin-reply {
+  background: rgba(209,32,38,0.04);
+  border-left: 4px solid var(--primary-red);
+}
+
+/* Wait Box */
+.support-wait-box {
+  background: #fff9e6;
+  border: 1px dashed #ffc107;
+}
+
+/* Form Box */
+.support-form-box {
+  background: #f0f4ff;
+  border: 1px solid #d0d7e8;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .support-card-interactive:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .support-msg-box {
+  background: #2d2d2d;
+  color: var(--muted);
+  border-left-color: #555;
+}
+
+body.dark-mode .support-admin-reply {
+  background: rgba(209,32,38,0.1);
+  color: var(--muted);
+}
+
+body.dark-mode .support-wait-box {
+  background: #332d1a;
+  border-color: #b58900;
+}
+
+body.dark-mode .support-form-box {
+  background: #1e2230;
+  border-color: #3b4252;
+}
