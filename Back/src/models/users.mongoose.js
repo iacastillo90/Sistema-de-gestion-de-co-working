@@ -33,7 +33,25 @@ async function encontrarUsuarioPorEmail(email) {
 
 }
 
+async function getAllUsers() {
+    return await Usuario.find().select('-password'); // no devolvemos contraseñas
+}
+
+async function getUserById(id) {
+    return await Usuario.findById(id).select('nombre email rol'); // solo campos públicos
+}
+
+async function updateUser(id, data) {
+    if (data.password) {
+        data.password = await bcrypt.hash(data.password, 10);
+    }
+    return await Usuario.findByIdAndUpdate(id, data, { new: true }).select('nombre email rol');
+}
+
 module.exports = {
     crearNuevoUsuario,
-    encontrarUsuarioPorEmail
+    encontrarUsuarioPorEmail,
+    getAllUsers,
+    getUserById,
+    updateUser
 }
