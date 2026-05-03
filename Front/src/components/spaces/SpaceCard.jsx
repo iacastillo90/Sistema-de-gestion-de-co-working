@@ -1,8 +1,8 @@
-function SpaceCard ({ espacio }) {
+function SpaceCard({ espacio }) {
     return (
         <div className="col-md-4">
             <div className="card h-100">
-                <img src={espacio.imagen} loading="lazy" className="card-img-top" alt={espacio.nombre}/>
+                <img src={espacio.imagen} loading="lazy" className="card-img-top" alt={espacio.nombre} />
                 <div className="card-body d-flex flex-column">
                     <h3 className="h5 card-title">{espacio.nombre}</h3>
                     <p className="card-text flex-grow-1">
@@ -12,9 +12,9 @@ function SpaceCard ({ espacio }) {
                         <li>👥 Capacidad: {espacio.capacidad} personas</li>
                         <li>💰 Precio: {espacio.precio} / mes</li>
                         <li>🟢 Disponible {espacio.disponibilidad ? "Sí" : "No"}</li>
-                        <li>📍 Ubicación: {espacio.ubicacion}</li>
+                        <li>📍 Ubicación: {espacio.location_id?.name || espacio.ubicacion}</li>
                     </ul>
-                    <a href="#registro" className="btn-contact btn-arrow-css mt-auto">
+                    <a href="#registro" className="btn-pill-red btn-arrow-css mt-auto text-white">
                         Reserva Ahora!
                     </a>
                 </div>
