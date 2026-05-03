@@ -1,0 +1,31 @@
+/* ==========================================================================
+    Reservations — Estilos específicos de reservas
+========================================================================== */
+
+/* Truncated note style in card */
+.reservation-nota {
+  font-style: italic;
+  border-left: 3px solid #ffc107;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .reservation-nota {
+  background-color: #2d2d2d !important;
+  color: var(--muted) !important;
+}
+
+body.dark-mode .badge-estado.badge-cancelada {
+  background: rgba(108, 117, 125, 0.12);
+  color: #a0a0a0;
+  border-color: rgba(108, 117, 125, 0.25);
+}
+
+@media (max-width: 767px) {
+  .reservation-form-card { padding: 1.25rem; }
+  .reservation-form-card .row.g-3 { gap: 0.75rem; }
+}

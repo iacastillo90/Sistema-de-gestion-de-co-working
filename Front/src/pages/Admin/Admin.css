@@ -1,0 +1,550 @@
+/* ==========================================================================
+   Admin.css — Estilos compartidos para el panel de administración
+   Dark mode: todas las superficies, componentes interactivos y estados
+========================================================================== */
+
+/* ── Header de sección ────────────────────────────────────────────────────── */
+.admin-header-title {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── KPI Cards ────────────────────────────────────────────────────────────── */
+.kpi-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Tablas Admin ─────────────────────────────────────────────────────────── */
+.admin-table-container {
+  overflow-x: auto;
+}
+
+.admin-table th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 1rem;
+}
+
+.admin-table td {
+  padding: 1rem 0.5rem;
+  vertical-align: middle;
+}
+
+/* ── Avatares ─────────────────────────────────────────────────────────────── */
+.admin-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* ── Modales Admin ────────────────────────────────────────────────────────── */
+.admin-modal-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Modal overlay ────────────────────────────────────────────────────────── */
+.premium-modal .modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Loading ──────────────────────────────────────────────────────────────── */
+.loading-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  color: var(--primary-red);
+}
+
+
+/* ==========================================================================
+   DARK MODE — Cobertura completa del panel Admin
+   Orden: layout → superficies → texto → componentes → estados interactivos
+========================================================================== */
+
+/* ── Variables dark reasignadas ────────────────────────────────────────────── */
+body.dark-mode {
+  --dm-bg:          #0f0f1a;
+  --dm-surface:     #1a1a2e;
+  --dm-surface-2:   #1e2035;
+  --dm-surface-3:   #252540;
+  --dm-border:      rgba(255, 255, 255, 0.08);
+  --dm-text:        #e2e4f0;
+  --dm-text-muted:  rgba(200, 205, 230, 0.55);
+  --dm-title:       #ffffff;
+}
+
+/* ── Dashboard layout bg ──────────────────────────────────────────────────── */
+body.dark-mode .dashboard-layout {
+  background-color: var(--dm-bg) !important;
+}
+
+body.dark-mode .dashboard-content {
+  background-color: var(--dm-bg);
+}
+
+/* ── Cards y superficies ──────────────────────────────────────────────────── */
+body.dark-mode .premium-card,
+body.dark-mode .card,
+body.dark-mode .stat-card {
+  background-color: var(--dm-surface) !important;
+  border-color: var(--dm-border) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode .premium-card .card-body,
+body.dark-mode .card .card-body {
+  background-color: transparent;
+}
+
+/* ── Fondos utilitarios Bootstrap ─────────────────────────────────────────── */
+body.dark-mode .bg-light,
+body.dark-mode .bg-white {
+  background-color: var(--dm-surface-2) !important;
+}
+
+body.dark-mode .bg-light * {
+  color: var(--dm-text) !important;
+}
+
+/* ── Separadores de sección interna ───────────────────────────────────────── */
+body.dark-mode hr,
+body.dark-mode .border-top,
+body.dark-mode .border-bottom,
+body.dark-mode .border {
+  border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .card-footer,
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+  border-color: var(--dm-border) !important;
+  background-color: transparent !important;
+}
+
+/* ── Texto ────────────────────────────────────────────────────────────────── */
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3,
+body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+  color: var(--dm-title) !important;
+}
+
+body.dark-mode .section-title,
+body.dark-mode .fw-bold:not(.badge):not(.btn) {
+  color: var(--dm-title) !important;
+}
+
+body.dark-mode p,
+body.dark-mode li,
+body.dark-mode .fw-semibold {
+  color: var(--dm-text) !important;
+}
+
+body.dark-mode .text-muted,
+body.dark-mode .text-secondary,
+body.dark-mode small {
+  color: var(--dm-text-muted) !important;
+}
+
+body.dark-mode .text-dark {
+  color: var(--dm-text) !important;
+}
+
+/* ── Tablas ───────────────────────────────────────────────────────────────── */
+body.dark-mode .admin-table th {
+  color: var(--dm-text-muted) !important;
+  border-bottom-color: var(--dm-border) !important;
+  background-color: var(--dm-surface) !important;
+}
+
+body.dark-mode .admin-table td {
+  color: var(--dm-text) !important;
+  border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .table,
+body.dark-mode .table > :not(caption) > * > * {
+  background-color: transparent !important;
+  color: var(--dm-text) !important;
+  border-color: var(--dm-border) !important;
+}
+
+body.dark-mode .table-hover > tbody > tr:hover > * {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  color: #fff !important;
+}
+
+/* ── Formularios ──────────────────────────────────────────────────────────── */
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .input-group-text {
+  background-color: var(--dm-surface-3) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--dm-text) !important;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background-color: var(--dm-surface-2) !important;
+  border-color: var(--primary-red) !important;
+  box-shadow: 0 0 0 0.2rem rgba(209, 32, 38, 0.2) !important;
+  color: #fff !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: rgba(200, 205, 230, 0.35) !important;
+}
+
+body.dark-mode .form-label,
+body.dark-mode label {
+  color: var(--dm-text) !important;
+}
+
+/* ── List Groups (tickets de soporte, reservas asociadas) ─────────────────── */
+body.dark-mode .list-group-item {
+  background-color: var(--dm-surface-2) !important;
+  border-color: var(--dm-border) !important;
+  color: var(--dm-text) !important;
+}
+
+body.dark-mode .list-group-item:hover,
+body.dark-mode .list-group-item-action:hover {
+  background-color: var(--dm-surface-3) !important;
+  color: #fff !important;
+}
+
+/* ── Badges de estado (custom) ────────────────────────────────────────────── */
+body.dark-mode .badge-estado {
+  border-width: 1px;
+  border-style: solid;
+}
+
+body.dark-mode .badge-confirmada {
+  background-color: rgba(25, 135, 84, 0.18) !important;
+  color: #4ade80 !important;
+  border-color: rgba(25, 135, 84, 0.3) !important;
+}
+
+body.dark-mode .badge-cancelada {
+  background-color: rgba(220, 53, 69, 0.18) !important;
+  color: #f87171 !important;
+  border-color: rgba(220, 53, 69, 0.3) !important;
+}
+
+body.dark-mode .badge-pendiente {
+  background-color: rgba(255, 193, 7, 0.18) !important;
+  color: #fbbf24 !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
+}
+
+/* ── Badges Bootstrap bg-*-10 ─────────────────────────────────────────────── */
+body.dark-mode .bg-primary.bg-opacity-10 {
+  background-color: rgba(13, 110, 253, 0.18) !important;
+}
+body.dark-mode .bg-danger.bg-opacity-10 {
+  background-color: rgba(220, 53, 69, 0.18) !important;
+}
+body.dark-mode .bg-success.bg-opacity-10 {
+  background-color: rgba(25, 135, 84, 0.18) !important;
+}
+body.dark-mode .bg-warning.bg-opacity-10 {
+  background-color: rgba(255, 193, 7, 0.18) !important;
+}
+body.dark-mode .bg-info.bg-opacity-10 {
+  background-color: rgba(13, 202, 240, 0.18) !important;
+}
+body.dark-mode .bg-secondary.bg-opacity-10,
+body.dark-mode .bg-secondary.bg-opacity-15 {
+  background-color: rgba(108, 117, 125, 0.22) !important;
+}
+
+/* ── Botones outline ──────────────────────────────────────────────────────── */
+body.dark-mode .btn-outline-secondary {
+  color: var(--dm-text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+body.dark-mode .btn-outline-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+body.dark-mode .btn-outline-primary {
+  color: #7ab3ff;
+  border-color: rgba(100, 160, 255, 0.4);
+}
+body.dark-mode .btn-outline-primary:hover {
+  background-color: rgba(100, 160, 255, 0.15);
+  color: #fff;
+}
+
+body.dark-mode .btn-outline-danger {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.4);
+}
+body.dark-mode .btn-outline-danger:hover {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #fff;
+}
+
+body.dark-mode .btn-outline-success {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.4);
+}
+body.dark-mode .btn-outline-success:hover {
+  background-color: rgba(25, 135, 84, 0.2);
+  color: #fff;
+}
+
+body.dark-mode .btn-light {
+  background-color: var(--dm-surface-3) !important;
+  color: var(--dm-text) !important;
+  border-color: var(--dm-border) !important;
+}
+body.dark-mode .btn-light:hover {
+  background-color: var(--dm-surface-2) !important;
+  color: #fff !important;
+}
+
+/* ── Alertas ──────────────────────────────────────────────────────────────── */
+body.dark-mode .alert-danger {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+  border-color: rgba(220, 53, 69, 0.3) !important;
+  color: #f87171 !important;
+}
+
+body.dark-mode .alert-warning {
+  background-color: rgba(255, 193, 7, 0.12) !important;
+  border-color: rgba(255, 193, 7, 0.25) !important;
+  color: #fbbf24 !important;
+}
+
+body.dark-mode .alert-success {
+  background-color: rgba(25, 135, 84, 0.15) !important;
+  border-color: rgba(25, 135, 84, 0.3) !important;
+  color: #4ade80 !important;
+}
+
+body.dark-mode .alert-info {
+  background-color: rgba(13, 202, 240, 0.12) !important;
+  border-color: rgba(13, 202, 240, 0.25) !important;
+  color: #67e8f9 !important;
+}
+
+/* ── Progress bars ────────────────────────────────────────────────────────── */
+body.dark-mode .progress {
+  background-color: var(--dm-surface-3) !important;
+}
+
+/* ── Tab nav (Soporte, Pagos) ─────────────────────────────────────────────── */
+body.dark-mode .tab-nav-banking,
+body.dark-mode .nav-tabs {
+  border-bottom-color: var(--dm-border) !important;
+  background-color: transparent !important;
+}
+
+body.dark-mode .nav-tabs .nav-link {
+  color: var(--dm-text-muted) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.dark-mode .nav-tabs .nav-link.active,
+body.dark-mode .nav-tabs .nav-link:hover {
+  color: var(--dm-title) !important;
+  background-color: var(--dm-surface-2) !important;
+  border-color: var(--dm-border) var(--dm-border) var(--dm-surface-2) !important;
+}
+
+/* ── Chart bars (SupportChart) ────────────────────────────────────────────── */
+body.dark-mode .chart-bar-track {
+  background-color: var(--dm-surface-3) !important;
+}
+
+/* ── Toast ────────────────────────────────────────────────────────────────── */
+body.dark-mode .toast-notification,
+body.dark-mode [style*="position: fixed"][style*="bottom"] .alert {
+  background-color: var(--dm-surface) !important;
+  border-color: var(--dm-border) !important;
+  color: var(--dm-text) !important;
+}
+
+/* ── Modal backdrop oscuro ────────────────────────────────────────────────── */
+body.dark-mode .modal-content {
+  background-color: var(--dm-surface) !important;
+  border-color: var(--dm-border) !important;
+  color: var(--dm-text) !important;
+}
+
+body.dark-mode .modal-content .text-dark {
+  color: var(--dm-text) !important;
+}
+
+body.dark-mode .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* ── Secciones con fondo de nota/notas (bg-warning custom) ───────────────── */
+body.dark-mode [style*="background-color: #fff9e6"],
+body.dark-mode [style*="backgroundColor: '#fff9e6'"] {
+  background-color: rgba(255, 193, 7, 0.08) !important;
+  border-color: rgba(255, 193, 7, 0.2) !important;
+}
+
+/* ── Elementos con fondo inline blanco ────────────────────────────────────── */
+body.dark-mode [style*="background: #fff"],
+body.dark-mode [style*="background:#fff"],
+body.dark-mode [style*="backgroundColor: '#fff'"],
+body.dark-mode [style*="backgroundColor:'#fff'"] {
+  background-color: var(--dm-surface-2) !important;
+}
+
+/* ── Colores de texto inline ──────────────────────────────────────────────── */
+body.dark-mode [style*="color: #1a1a2e"],
+body.dark-mode [style*="color: rgb(26, 26, 46)"] {
+  color: var(--dm-title) !important;
+}
+
+/* ── Admin table header sticky bg ────────────────────────────────────────── */
+body.dark-mode thead,
+body.dark-mode thead th,
+body.dark-mode thead td {
+  background-color: var(--dm-surface) !important;
+  color: var(--dm-text-muted) !important;
+}
+
+/* ==========================================================================
+   ANIMACIONES Y RESPONSIVIDAD (Mobile, Tablet, 1024, 1440)
+   Alineación con el diseño premium de la Landing
+========================================================================== */
+
+/* ── Animaciones Base ─────────────────────────────────────────────────────── */
+@keyframes adminFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.premium-card, .kpi-card, .admin-table-container {
+  animation: adminFadeInUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+}
+
+.premium-card {
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.premium-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.dark-mode .premium-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Mobile (<768px) ──────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+  .admin-header-title {
+    font-size: 1.5rem !important;
+  }
+  .admin-table th, .admin-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  .admin-table td img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .premium-card .card-body {
+    padding: 1.25rem !important;
+  }
+  .kpi-card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+  .badge {
+    font-size: 0.7rem !important;
+  }
+}
+
+/* ── Tablet (768px - 1023.98px) ───────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .admin-table th, .admin-table td {
+    font-size: 0.9rem;
+  }
+  .premium-card .card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+/* ── Laptop (1024px - 1439.98px) ──────────────────────────────────────────── */
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  .admin-table th, .admin-table td {
+    font-size: 0.95rem;
+  }
+  .premium-card .card-body {
+    padding: 2rem !important;
+  }
+  .premium-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* ── Desktop XL (1440px+) ─────────────────────────────────────────────────── */
+@media (min-width: 1440px) {
+  .dashboard-content {
+    max-width: 1440px !important;
+    padding: 48px !important;
+  }
+  .admin-header-title {
+    font-size: 2.25rem !important;
+  }
+  .premium-card .card-body {
+    padding: 2.5rem !important;
+  }
+  .admin-table th, .admin-table td {
+    font-size: 1rem;
+    padding: 1.25rem 1rem;
+  }
+  .kpi-card-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.75rem;
+  }
+  .premium-card:hover {
+    transform: translateY(-6px);
+  }
+}
