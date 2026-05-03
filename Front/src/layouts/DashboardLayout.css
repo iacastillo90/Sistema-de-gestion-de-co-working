@@ -1,0 +1,270 @@
+/* ==========================================================================
+   DashboardLayout.css — Layout principal autenticado
+   Sidebar fijo (260px desktop) + Topbar sticky + Contenido scrollable
+========================================================================== */
+
+/* ── Layout raíz ─────────────────────────────────────────────────────────── */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface-2);
+}
+
+body.dark-mode .dashboard-layout {
+  background: #0f0f1a;
+}
+
+/* ── Área principal (a la derecha del sidebar) ────────────────────────────── */
+.dashboard-main {
+  flex: 1;
+  margin-left: 260px;
+  min-height: 100vh;
+  min-width: 0; /* Ensures flex children (like tables) can shrink and trigger overflow */
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Topbar ────────────────────────────────────────────────────────────────── */
+.dashboard-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 60px;
+}
+
+body.dark-mode .dashboard-topbar {
+  background: rgba(15, 15, 26, 0.88);
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+/* Toggle móvil dentro del topbar */
+.sidebar-toggle-topbar {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  background: transparent;
+  color: #495057;
+  font-size: 1rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle-topbar:hover {
+  background: rgba(209, 32, 38, 0.08);
+  border-color: var(--primary-red);
+  color: var(--primary-red);
+}
+
+body.dark-mode .sidebar-toggle-topbar {
+  border-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.6);
+}
+
+/* Título de ruta */
+.dashboard-topbar-title {
+  flex: 1;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--dark-text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.dark-mode .dashboard-topbar-title {
+  color: #fff;
+}
+
+/* Agrupación derecha */
+.dashboard-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Fecha */
+.dashboard-topbar-date {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+body.dark-mode .dashboard-topbar-date {
+  color: rgba(255,255,255,0.45);
+}
+
+/* Divider */
+.topbar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+body.dark-mode .topbar-divider {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Badge de rol */
+.topbar-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.topbar-role-badge.admin {
+  background: rgba(209, 32, 38, 0.1);
+  color: var(--primary-red);
+  border: 1px solid rgba(209, 32, 38, 0.2);
+}
+
+.topbar-role-badge.user {
+  background: rgba(15, 52, 96, 0.08);
+  color: #0f3460;
+  border: 1px solid rgba(15, 52, 96, 0.15);
+}
+
+body.dark-mode .topbar-role-badge.user {
+  background: rgba(100, 160, 255, 0.12);
+  color: #7ab3ff;
+  border-color: rgba(100, 160, 255, 0.2);
+}
+
+/* Botón logout topbar */
+.topbar-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+
+.topbar-logout:hover {
+  background: var(--primary-red);
+  color: #fff;
+  border-color: var(--primary-red);
+}
+
+body.dark-mode .topbar-logout {
+  color: rgba(255,255,255,0.5);
+  border-color: rgba(255,255,255,0.1);
+}
+
+body.dark-mode .topbar-logout:hover {
+  background: var(--primary-red);
+  color: #fff;
+  border-color: var(--primary-red);
+}
+
+/* ── Contenido de la página ───────────────────────────────────────────────── */
+.dashboard-content {
+  flex: 1;
+  padding: 28px;
+  max-width: 1400px;
+  width: 100%;
+}
+
+/* ── Responsive — 4 tiers ─────────────────────────────────────────────────── */
+
+/* Mobile & Tablet (≤ 1024.98px) */
+@media (max-width: 1024.98px) {
+  .dashboard-main {
+    margin-left: 0;
+    min-width: 0;
+  }
+
+  .sidebar-toggle-topbar {
+    display: inline-flex;
+  }
+
+  .dashboard-topbar {
+    padding: 0 1rem;
+    height: 58px;
+  }
+
+  .dashboard-content {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* Mobile Specific adjustments (≤ 767.98px) */
+@media (max-width: 767.98px) {
+  .dashboard-topbar-date {
+    display: none;
+  }
+}
+
+/* Tablet Specific adjustments (768px – 1024px) */
+@media (min-width: 768px) and (max-width: 1024.98px) {
+  .dashboard-topbar {
+    padding: 0 1.25rem;
+  }
+
+  .dashboard-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Laptop (1025px – 1439px) */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .dashboard-main {
+    margin-left: 240px;
+  }
+
+  .dashboard-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop (≥ 1440px) */
+@media (min-width: 1440px) {
+  .dashboard-main {
+    margin-left: 280px;
+  }
+
+  .dashboard-content {
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* Ocultar elementos de topbar en pantallas pequeñas */
+@media (max-width: 540px) {
+  .topbar-role-badge { display: none; }
+  .topbar-divider    { display: none; }
+}
+
+/* Ocultar toggle sidebar en desktop */
+@media (min-width: 1025px) {
+  .sidebar-toggle-topbar { display: none; }
+}
