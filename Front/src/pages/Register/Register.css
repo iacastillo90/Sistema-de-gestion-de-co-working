@@ -1,0 +1,143 @@
+/* ==========================================================================
+    Registro — Estilos
+    Reutiliza el mismo fondo y layout del Login para consistencia visual
+========================================================================== */
+
+.register-container {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("../../assets/img/png/fondo-login.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 40px;
+  min-height: 100vh;
+}
+
+.register-box {
+  background: rgba(255, 255, 255, 0.95);
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.register-box h2 {
+  margin-bottom: 8px;
+  text-align: center;
+  font-weight: 800;
+  color: var(--dark-text);
+}
+
+.register-box .register-subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+.register-box .form-label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--dark-text);
+  font-size: 0.9rem;
+}
+
+/* Rediseñando input interno pero permitiendo que form-control-premium del index lo maneje, 
+   solo se le añade margen extra a los inputs del register */
+.register-box input {
+  margin: 4px 0 12px 0;
+}
+
+.register-box button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.register-box .signup-title {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.register-success {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.register-success .success-icon {
+  font-size: 4rem;
+  color: #198754;
+  margin-bottom: 16px;
+}
+
+.register-success h3 {
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--dark-text);
+}
+
+.register-success p {
+  color: var(--muted);
+}
+
+.register-success button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+
+body.dark-mode .register-box {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .register-box h2,
+body.dark-mode .register-success h3,
+body.dark-mode .register-box .form-label {
+  color: var(--title);
+}
+
+body.dark-mode .register-box .register-subtitle,
+body.dark-mode .register-box .signup-title,
+body.dark-mode .register-success p {
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .register-container { padding: 80px 1rem 2rem; }
+  .register-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+  }
+}
+@media (max-width: 480px) {
+  .register-box { padding: 1.75rem 1.25rem; }
+}

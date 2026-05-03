@@ -1,0 +1,26 @@
+/* ==========================================================================
+    Dashboard — Estilos específicos
+========================================================================== */
+
+/* Quick Actions Button Fixes */
+.quick-action-btn {
+  justify-content: flex-start !important;
+  padding: 0.55rem 1rem !important;
+}
+
+/* Pagination Fixes */
+.dashboard-pagination .btn {
+  border-radius: 8px;
+}
+
+.dashboard-pagination .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Dark Mode Overrides
+========================================================================== */
+body.dark-mode .bg-light.rounded-3 {
+  background-color: #2a2a2a !important;
+}
