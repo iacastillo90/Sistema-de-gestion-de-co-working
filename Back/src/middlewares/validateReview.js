@@ -1,5 +1,11 @@
 const validateReview = (req, res, next) => {
-  const { user_id, space_id, calificacion, comentario } = req.body;
+  const { user_id, space_id, calificacion, comentario, respuesta_admin } = req.body;
+
+  // Si es una actualización de solo la respuesta admin, dejar pasar sin validaciones de creación
+  const isAdminResponse = respuesta_admin !== undefined && !user_id && !space_id && !comentario;
+  if (isAdminResponse) {
+    return next();
+  }
 
   // Verificamos que todos los atributos requeridos existan en el body
   if (!user_id || !space_id || calificacion === undefined || !comentario) {

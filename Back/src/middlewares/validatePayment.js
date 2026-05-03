@@ -1,5 +1,5 @@
 // Lista de estados válidos según el dominio de negocio
-const VALID_STATES = ['Pendiente', 'Completado'];
+const VALID_STATES = ['Pendiente', 'En Revisión', 'Completado'];
 
 /**
  * Middleware que valida el body de una petición de pago.
